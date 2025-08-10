@@ -12,9 +12,8 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Background Image */
     .background {
-      background-image: url('https://images.unsplash.com/photo-1601597111140-6dc5e03dba3f'); /* Replace with your image */
+      background-image: url('https://images.unsplash.com/photo-1601597111140-6dc5e03dba3f'); /* You can change to your own background */
       background-size: cover;
       background-position: center;
       filter: blur(8px);
@@ -24,7 +23,6 @@
       z-index: 1;
     }
 
-    /* Overlay with transparency */
     .overlay {
       position: fixed;
       top: 0; left: 0;
@@ -37,7 +35,6 @@
       align-items: center;
     }
 
-    /* Plan Selection Box */
     .modal-box {
       background-color: white;
       padding: 30px;
@@ -86,18 +83,32 @@
       color: #333;
     }
 
-    .plan button {
+    /* Free plan button - plain text */
+    .free-button {
+      margin-top: 15px;
+      background: none;
+      border: none;
+      color: #007bff;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: underline;
+    }
+
+    /* Subscribe button - styled */
+    .subscribe-button {
       margin-top: 15px;
       padding: 10px 20px;
       border: none;
-      background: #0f6eff;
+      background: linear-gradient(to right, #0066ff, #3399ff);
       color: white;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 16px;
     }
 
-    /* Main site content hidden at first */
+    /* Main site content (hidden initially) */
     #mainContent {
       display: none;
       position: relative;
@@ -118,11 +129,12 @@
 
 <div class="background"></div>
 
-<!-- Popup Plan Selection -->
+<!-- Plan Selection Modal -->
 <div class="overlay" id="planOverlay">
   <div class="modal-box">
     <h2>Select a Plan to Continue</h2>
     <div class="plans">
+      <!-- Free Plan -->
       <div class="plan">
         <h3>Free</h3>
         <div class="price">₹0/month</div>
@@ -130,9 +142,10 @@
         <div class="feature">✔ Basic Quiz</div>
         <div class="feature">✖ No Downloadable Notes</div>
         <div class="feature">✖ No Personal Support</div>
-        <button onclick="selectPlan('Free')">Continue</button>
+        <button class="free-button" onclick="selectPlan('Free')">Continue with Free Plan</button>
       </div>
 
+      <!-- Pro Plan -->
       <div class="plan">
         <h3>Pro</h3>
         <div class="price">₹299/month</div>
@@ -140,9 +153,10 @@
         <div class="feature">✔ Quizzes & Assignments</div>
         <div class="feature">✔ Downloadable Notes</div>
         <div class="feature">✖ No 1-on-1 Support</div>
-        <button onclick="selectPlan('Pro')">Continue</button>
+        <button class="subscribe-button" onclick="selectPlan('Pro')">Subscribe</button>
       </div>
 
+      <!-- Advanced Plan -->
       <div class="plan">
         <h3>Advanced</h3>
         <div class="price">₹499/month</div>
@@ -150,13 +164,13 @@
         <div class="feature">✔ 1-on-1 Doubt Sessions</div>
         <div class="feature">✔ NEET/JEE Test Series</div>
         <div class="feature">✔ Early Access to Notes</div>
-        <button onclick="selectPlan('Advanced')">Continue</button>
+        <button class="subscribe-button" onclick="selectPlan('Advanced')">Subscribe</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Main Site (Hidden at First) -->
+<!-- Main Content -->
 <div id="mainContent">
   <div class="section">
     <h2>Welcome to Shree Ram Coaching</h2>

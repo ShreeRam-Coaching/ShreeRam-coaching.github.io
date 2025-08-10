@@ -1,299 +1,516 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Shree Ram Coaching — Portal</title>
   <style>
-    /* Reset and basics */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Inter, system-ui, Arial, sans-serif;
-      background: #f5f9ff;
-      color: #0b1220;
-      line-height: 1.4;
+    :root{
+      --blue:#0f6eff;
+      --muted:#6b7280;
+      --card-bg:#fff;
+      --page-bg:#f3f8ff;
+      --radius:14px;
+      --shadow: 0 10px 30px rgba(10,20,40,0.08);
+      --shadow-strong: 0 20px 50px rgba(10,20,40,0.12);
     }
-    a { color: inherit; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial,sans-serif;background:var(--page-bg);color:#0b1220;line-height:1.35}
+    a{color:inherit}
+    .centered {display:flex;align-items:center;justify-content:center}
 
-    /* Main site container */
-    .container {
-      max-width: 1100px;
-      margin: 20px auto;
-      padding: 0 16px;
-      filter: none;
-      transition: filter 0.3s ease;
+    /* ---------------------------
+       Plan selection overlay
+       --------------------------- */
+    #plansOverlay{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:rgba(7,10,15,0.45);z-index:60;padding:28px;
     }
-    /* When modal is open, dim the background */
-    body.modal-open .container {
-      filter: blur(3px) brightness(0.7);
-      pointer-events: none;
-      user-select: none;
+    .plansWrap{
+      width:100%;max-width:960px;background:linear-gradient(180deg,#fff,#fbfdff);
+      border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-strong);
+      display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;
     }
+    .planCard{
+      flex:1 1 280px;background:var(--card-bg);border-radius:12px;padding:22px;
+      box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;text-align:center;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .planCard:hover{transform:translateY(-8px);box-shadow: 0 30px 70px rgba(10,20,40,0.14)}
+    .planTitle{font-weight:800;margin-bottom:8px;font-size:20px}
+    .planPrice{color:var(--blue);font-weight:900;font-size:26px;margin-bottom:12px}
+    ul.features{list-style:none;padding-left:0;margin:0 0 18px 0;color:#444;text-align:left;width:100%}
+    ul.features li{padding-left:18px;position:relative;margin-bottom:10px}
+    ul.features li::before{content:"\2713";position:absolute;left:0;color:var(--blue);font-weight:700}
+    button.btn{cursor:pointer;border-radius:10px;padding:12px 18px;font-weight:800;border:none;font-size:15px}
+    .btnPrimary{background:var(--blue);color:#fff;width:100%}
+    .btnOutline{background:transparent;color:var(--blue);border:2px solid var(--blue);width:100%}
 
-    /* Navbar styles */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      background: white;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    .brand {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #0f6eff, #60a5fa);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 800;
-      font-size: 24px;
-    }
-    .brand h1 {
-      font-size: 18px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .nav-links a {
-      padding: 8px 10px;
-      border-radius: 8px;
-      color: #374151;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-    }
+    /* If user already has plan hide overlay */
+    .hidden{display:none}
 
-    /* Modal background */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+    /* --------------- Main site layout --------------- */
+    .site {
+      max-width:1100px;margin:26px auto;padding:0 18px;
     }
+    header.navbar{
+      display:flex;align-items:center;justify-content:space-between;padding:12px 18px;background:#fff;border-radius:10px;
+      box-shadow:var(--shadow);position:sticky;top:18px;z-index:40;
+    }
+    .nav-left, .nav-center, .nav-right{display:flex;align-items:center;gap:12px}
+    .logoBox{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#2b8bff,#6fb0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
+    nav.navLinks a{margin:0 8px;color:#0b1220;text-decoration:none;font-weight:600}
+    .nav-center{flex-direction:column;align-items:center;flex:1}
+    .title{font-weight:800;font-size:20px}
+    .subtitle{font-size:12px;color:var(--muted)}
+    .nav-right {gap:8px}
+    .searchInput{padding:10px 12px;border-radius:10px;border:1px solid #e6eefb;min-width:220px}
+    .planBadge{background:#eef6ff;color:var(--blue);padding:6px 10px;border-radius:8px;font-weight:700}
 
-    /* Modal container */
-    .modal {
-      background: white;
-      border-radius: 15px;
-      padding: 24px 32px;
-      width: 90%;
-      max-width: 700px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
+    /* Banner */
+    .banner{
+      margin-top:18px;border-radius:12px;background:linear-gradient(90deg,#eaf4ff,#f7fbff);
+      min-height:180px;padding:28px;display:flex;align-items:flex-end;box-shadow:var(--shadow);
     }
+    .banner h1{font-size:34px;margin-bottom:6px}
+    .banner p{color:var(--muted)}
 
-    /* Each plan card */
-    .plan {
-      flex: 1 1 200px;
-      border-radius: 12px;
-      padding: 20px 16px;
-      box-shadow: 0 8px 30px rgba(10,20,40,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      transition: transform 0.3s ease;
+    /* Content flow */
+    .flow{margin-top:20px;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+    .classes, .subjects, .chapters, .notesPanel{
+      background:#fff;padding:18px;border-radius:12px;box-shadow:var(--shadow);flex:1;
+      min-width:220px;max-width:320px;
     }
-    .plan:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 18px 50px rgba(10,20,40,0.15);
+    .classes button, .subjects button, .chapters button, .notesPanel button{
+      display:block;width:100%;text-align:left;padding:12px;border-radius:10px;border:1px solid #f0f5ff;background:transparent;margin-bottom:10px;cursor:pointer;font-weight:700
     }
+    .classes button.active, .subjects button.active{background:linear-gradient(90deg,#f0f8ff,#ecf7ff);border-color:#dbeeff}
+    .notesPanel .noteItem{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;border:1px dashed #eef6ff;margin-bottom:10px}
+    .notesPanel .noteItem button{padding:8px 12px;border-radius:8px;border:none;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
 
-    /* Plan titles */
-    .plan h2 {
-      font-weight: 700;
-      margin-bottom: 8px;
-      font-size: 22px;
-    }
+    /* small note */
+    .noteEmpty{color:var(--muted);padding:8px;font-style:italic}
 
-    /* Plan price */
-    .price {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      color: #0f6eff;
-    }
-
-    /* Features list */
-    ul.features {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 24px;
-      color: #444;
-      font-size: 15px;
-      text-align: left;
-    }
-    ul.features li {
-      margin-bottom: 10px;
-      padding-left: 18px;
-      position: relative;
-    }
-    ul.features li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: #0f6eff;
-      font-weight: bold;
-    }
-
-    /* Buttons */
-    button.subscribe-btn {
-      background: #0f6eff;
-      color: white;
-      font-weight: 700;
-      padding: 12px 24px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    button.subscribe-btn:hover {
-      background: #0956cc;
-    }
-
-    /* Free plan button style */
-    button.free-btn {
-      background: transparent;
-      color: #0f6eff;
-      font-weight: 700;
-      padding: 12px 24px;
-      border-radius: 10px;
-      border: 2px solid #0f6eff;
-      cursor: pointer;
-      width: 100%;
-      font-size: 16px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    button.free-btn:hover {
-      background: #0f6eff;
-      color: white;
-    }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      .modal {
-        flex-direction: column;
-      }
-      .plan {
-        width: 100%;
-      }
+    /* responsive */
+    @media (max-width:880px){
+      .banner{min-height:140px;padding:18px}
+      .nav-center{display:none}
+      .searchInput{min-width:140px}
+      .flow{flex-direction:column}
+      .classes, .subjects, .chapters, .notesPanel{max-width:100%}
+      .plansWrap{max-width:760px}
     }
   </style>
 </head>
 <body>
 
-  <!-- Main coaching site container -->
-  <div class="container">
-    <header class="nav">
-      <div class="brand">
-        <div class="logo">SR</div>
-        <div>
-          <h1>Shree Ram Coaching</h1>
-          <div class="muted" style="font-size:13px">Foundation • Boards • Test Prep</div>
-        </div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="#courses">Courses</a>
-        <a href="#teachers">Teachers</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <main>
-      <section id="courses" style="margin-top: 30px;">
-        <h2>Courses Section (Content here)</h2>
-        <p>This is the main site content. The user will see this after selecting a plan.</p>
-      </section>
-      <!-- Add your full site content here -->
-    </main>
-
-    <footer style="margin: 30px 0; text-align: center; color: #6b7280;">
-      © Shree Ram Coaching — Demo site.
-    </footer>
-  </div>
-
-  <!-- Modal popup overlay -->
-  <div id="planModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="plan">
-        <h2>Free Plan</h2>
-        <div class="price">₹0</div>
+  <!-- Plans overlay (shows first) -->
+  <div id="plansOverlay">
+    <div class="plansWrap" role="dialog" aria-modal="true" aria-label="Choose a plan">
+      <div class="planCard">
+        <div class="planTitle">Free Plan</div>
+        <div class="planPrice">₹0</div>
         <ul class="features">
           <li>Basic access to notes</li>
           <li>Limited PDFs</li>
           <li>Community support</li>
         </ul>
-        <button class="free-btn" onclick="selectPlan('Free Plan')">Continue with Free Plan</button>
+        <button class="btn btnOutline" onclick="selectPlan('Free')">Continue with Free Plan</button>
       </div>
-      <div class="plan">
-        <h2>Pro Plan</h2>
-        <div class="price">₹49 / month</div>
+
+      <div class="planCard">
+        <div class="planTitle">Pro Plan</div>
+        <div class="planPrice">₹49 / month</div>
         <ul class="features">
           <li>Full access to notes & PDFs</li>
           <li>Priority doubt support</li>
           <li>Downloadable content</li>
         </ul>
-        <button class="subscribe-btn" onclick="selectPlan('Pro Plan')">Subscribe</button>
+        <button class="btn btnPrimary" onclick="selectPlan('Pro')">Subscribe</button>
       </div>
-      <div class="plan">
-        <h2>Advanced Plan</h2>
-        <div class="price">₹99 / month</div>
+
+      <div class="planCard">
+        <div class="planTitle">Advanced Plan</div>
+        <div class="planPrice">₹99 / month</div>
         <ul class="features">
           <li>All Pro features</li>
           <li>One-on-one mentoring</li>
           <li>Exclusive video content</li>
         </ul>
-        <button class="subscribe-btn" onclick="selectPlan('Advanced Plan')">Subscribe</button>
+        <button class="btn btnPrimary" onclick="selectPlan('Advanced')">Subscribe</button>
       </div>
     </div>
   </div>
 
+  <!-- Main site -->
+  <div class="site" id="mainSite" style="display:none">
+    <header class="navbar">
+      <div class="nav-left" style="gap:12px">
+        <div class="logoBox">SR</div>
+        <nav class="navLinks">
+          <a href="#about" onclick="alert('About: Shree Ram Coaching — demo')">About</a>
+          <a href="#contact" onclick="alert('Contact Teachers: demo')">Contact Teachers</a>
+          <a href="#plans" onclick="showPlans()">Plan</a>
+        </nav>
+      </div>
+
+      <div class="nav-center">
+        <div class="title">Shree Ram Coaching</div>
+        <div class="subtitle">Foundation • Boards • Test Prep</div>
+      </div>
+
+      <div class="nav-right">
+        <input id="searchBox" class="searchInput" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" />
+        <div class="planBadge" id="currentPlan">Free</div>
+        <div style="width:44px;height:44px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:700">ID</div>
+      </div>
+    </header>
+
+    <div class="banner">
+      <div>
+        <h1>Welcome to Shree Ram Coaching</h1>
+        <p>Select a class, then a subject and chapter to open notes.</p>
+      </div>
+    </div>
+
+    <div class="flow" style="margin-bottom:60px">
+      <div class="classes" id="classesBox">
+        <h3 style="margin-bottom:12px">Classes</h3>
+        <!-- buttons created by JS -->
+      </div>
+
+      <div class="subjects" id="subjectsBox">
+        <h3 style="margin-bottom:12px">Subjects</h3>
+        <div class="noteEmpty">Select a class to see subjects</div>
+      </div>
+
+      <div class="chapters" id="chaptersBox">
+        <h3 style="margin-bottom:12px">Chapters</h3>
+        <div class="noteEmpty">Select a subject to see chapters</div>
+      </div>
+
+      <div class="notesPanel" id="notesBox">
+        <h3 style="margin-bottom:12px">Notes / PDF</h3>
+        <div class="noteEmpty">Select a chapter to see notes</div>
+      </div>
+    </div>
+
+    <footer style="text-align:center;color:var(--muted);padding:26px 0">
+      © Shree Ram Coaching — Demo site.
+    </footer>
+  </div>
+
   <script>
-    function selectPlan(plan) {
-      // Hide modal
-      const modal = document.getElementById('planModal');
-      modal.style.display = 'none';
-      // Remove body modal-open class to restore background interactivity
-      document.body.classList.remove('modal-open');
-      
-      // Show congrats message for paid plans, different for free plan
-      if (plan === 'Free Plan') {
-        alert("Welcome! You selected the Free Plan. Enjoy basic access.");
-      } else {
-        alert(`Congratulations! You have successfully selected the ${plan}. Enjoy premium features.`);
+    /********************
+      Sample data structure
+      - Replace pdf links with your real files later
+    ********************/
+    const samplePDF = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+    const data = {
+      "class 10": {
+        "Chemistry": {
+          "ch1": [{title: "Ch1 Notes (Chemistry)", url: samplePDF}],
+          "ch2": [{title: "Ch2 Notes (Chemistry)", url: samplePDF}]
+        },
+        "Physics": {
+          "ch1": [{title: "Ch1 Notes (Physics)", url: samplePDF}],
+          "ch2": [{title: "Ch2 Notes (Physics)", url: samplePDF}]
+        }
+      },
+      "class 11": {
+        "Chemistry": {
+          "ch1": [{title: "Ch1 Notes (Chemistry 11)", url: samplePDF}],
+          "ch2": [{title: "Ch2 Notes (Chemistry 11)", url: samplePDF}]
+        },
+        "Physics": {
+          "ch1": [{title: "Ch1 Notes (Physics 11)", url: samplePDF}],
+          "ch2": [{title: "Ch2 Notes (Physics 11)", url: samplePDF}]
+        }
       }
+    };
+
+    // -----------------------
+    // plan and display logic
+    // -----------------------
+    const plansOverlay = document.getElementById('plansOverlay');
+    const mainSite = document.getElementById('mainSite');
+    const currentPlanBadge = document.getElementById('currentPlan');
+
+    // If user already selected plan previously -> skip overlay
+    const savedPlan = localStorage.getItem('src_selectedPlan');
+    if (savedPlan) {
+      showMainSite(savedPlan);
     }
 
-    // On page load, show modal and block background interaction
-    window.onload = function() {
-      const modal = document.getElementById('planModal');
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
+    function selectPlan(plan){
+      // Save and show main site
+      localStorage.setItem('src_selectedPlan', plan);
+      showMainSite(plan);
     }
+
+    function showMainSite(plan){
+      plansOverlay.classList.add('hidden');
+      mainSite.style.display = 'block';
+      if(plan) currentPlanBadge.textContent = plan;
+      // initialize UI content
+      renderClasses();
+    }
+
+    function showPlans(){
+      plansOverlay.classList.remove('hidden');
+      mainSite.style.display = 'none';
+    }
+
+    // -----------------------
+    // Render Classes / Subjects / Chapters
+    // -----------------------
+    const classesBox = document.getElementById('classesBox');
+    const subjectsBox = document.getElementById('subjectsBox');
+    const chaptersBox = document.getElementById('chaptersBox');
+    const notesBox = document.getElementById('notesBox');
+
+    let selectedClass = null;
+    let selectedSubject = null;
+    let selectedChapter = null;
+
+    function renderClasses(){
+      classesBox.innerHTML = '<h3 style="margin-bottom:12px">Classes</h3>';
+      const keys = Object.keys(data);
+      keys.forEach(k=>{
+        const btn = document.createElement('button');
+        btn.textContent = k;
+        btn.onclick = ()=> { selectClass(k, btn) };
+        classesBox.appendChild(btn);
+      });
+      // reset others
+      subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3><div class="noteEmpty">Select a class to see subjects</div>';
+      chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3><div class="noteEmpty">Select a subject to see chapters</div>';
+      notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3><div class="noteEmpty">Select a chapter to see notes</div>';
+    }
+
+    function selectClass(cls, btn){
+      selectedClass = cls;
+      selectedSubject = null;
+      selectedChapter = null;
+      // highlight active
+      Array.from(classesBox.querySelectorAll('button')).forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // render subjects
+      const subjects = Object.keys(data[cls]);
+      subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3>';
+      subjects.forEach(sub=>{
+        const sbtn = document.createElement('button');
+        sbtn.textContent = sub;
+        sbtn.onclick = ()=> selectSubject(sub, sbtn);
+        subjectsBox.appendChild(sbtn);
+      });
+      // clear downstream
+      chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3><div class="noteEmpty">Select a subject to see chapters</div>';
+      notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3><div class="noteEmpty">Select a chapter to see notes</div>';
+    }
+
+    function selectSubject(sub, btn){
+      selectedSubject = sub;
+      selectedChapter = null;
+      Array.from(subjectsBox.querySelectorAll('button')).forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // render chapters
+      const chapters = Object.keys(data[selectedClass][sub]);
+      chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3>';
+      chapters.forEach(ch=>{
+        const cbtn = document.createElement('button');
+        cbtn.textContent = ch;
+        cbtn.onclick = ()=> selectChapter(ch, cbtn);
+        chaptersBox.appendChild(cbtn);
+      });
+      notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3><div class="noteEmpty">Select a chapter to see notes</div>';
+    }
+
+    function selectChapter(ch, btn){
+      selectedChapter = ch;
+      Array.from(chaptersBox.querySelectorAll('button')).forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // show notes
+      const items = data[selectedClass][selectedSubject][selectedChapter];
+      notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3>';
+      if(!items || items.length===0){
+        notesBox.innerHTML += '<div class="noteEmpty">No notes available yet</div>';
+        return;
+      }
+      items.forEach(it=>{
+        const outer = document.createElement('div');
+        outer.className = 'noteItem';
+        const left = document.createElement('div');
+        left.textContent = it.title;
+        const openBtn = document.createElement('button');
+        openBtn.textContent = 'Open';
+        openBtn.onclick = ()=> window.open(it.url, '_blank');
+        outer.appendChild(left);
+        outer.appendChild(openBtn);
+        notesBox.appendChild(outer);
+      });
+    }
+
+    // -----------------------
+    // Search: simple parser and filter
+    // -----------------------
+    const searchBox = document.getElementById('searchBox');
+    function handleSearch(){
+      const q = searchBox.value.trim().toLowerCase();
+      if(!q){
+        // reset UI if empty
+        renderClasses();
+        return;
+      }
+
+      // Try to parse tokens like: class 10 chemistry ch1
+      const tokens = q.split(/\s+/);
+      // find class token
+      let clsKey = null;
+      Object.keys(data).forEach(k=>{
+        if(q.includes(k)) clsKey = k;
+      });
+
+      // find subject token
+      let subjectKey = null;
+      if(clsKey) {
+        Object.keys(data[clsKey]).forEach(s=>{
+          if(q.includes(s.toLowerCase())) subjectKey = s;
+        });
+      } else {
+        // try any subject in any class
+        Object.keys(data).forEach(k=>{
+          Object.keys(data[k]).forEach(s=>{
+            if(q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }
+          });
+        });
+      }
+
+      // find chapter token (ch1 or ch2)
+      let chapterKey = null;
+      const chMatch = q.match(/ch(?:apter)?\s*?(\d+)/) || q.match(/ch(\d+)/) || q.match(/ch\s*(\d+)/);
+      if(chMatch){
+        chapterKey = 'ch' + chMatch[1];
+      } else {
+        // maybe user typed 'ch1' directly
+        const simple = tokens.find(t=>/^ch\d+$/.test(t));
+        if(simple) chapterKey = simple;
+      }
+
+      // Build search result UI depending on what we have
+      if(clsKey && subjectKey && chapterKey && data[clsKey] && data[clsKey][subjectKey] && data[clsKey][subjectKey][chapterKey]){
+        // show that exact chapter
+        selectedClass = clsKey;
+        selectedSubject = subjectKey;
+        selectedChapter = chapterKey;
+        // highlight and render
+        classesBox.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        Array.from(classesBox.querySelectorAll('button')).find(b=>b.textContent===clsKey)?.classList.add('active');
+        // subjects
+        subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3>';
+        Object.keys(data[clsKey]).forEach(sub=>{
+          const sb = document.createElement('button');
+          sb.textContent = sub;
+          sb.onclick = ()=> selectSubject(sub, sb);
+          if(sub===subjectKey) sb.classList.add('active');
+          subjectsBox.appendChild(sb);
+        });
+        // chapters
+        chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3>';
+        Object.keys(data[clsKey][subjectKey]).forEach(ch=>{
+          const cb = document.createElement('button');
+          cb.textContent = ch;
+          cb.onclick = ()=> selectChapter(ch, cb);
+          if(ch===chapterKey) cb.classList.add('active');
+          chaptersBox.appendChild(cb);
+        });
+        // notes
+        selectChapter(chapterKey, Array.from(chaptersBox.querySelectorAll('button')).find(b=>b.textContent===chapterKey));
+        return;
+      }
+
+      // If search phrase contains only subject+class, show chapters
+      if(clsKey && subjectKey){
+        selectedClass = clsKey; selectedSubject = subjectKey;
+        classesBox.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        Array.from(classesBox.querySelectorAll('button')).find(b=>b.textContent===clsKey)?.classList.add('active');
+        // subjects
+        subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3>';
+        Object.keys(data[clsKey]).forEach(sub=>{
+          const sb = document.createElement('button');
+          sb.textContent = sub;
+          sb.onclick = ()=> selectSubject(sub, sb);
+          if(sub===subjectKey) sb.classList.add('active');
+          subjectsBox.appendChild(sb);
+        });
+        // chapters
+        chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3>';
+        Object.keys(data[clsKey][subjectKey]).forEach(ch=>{
+          const cb = document.createElement('button');
+          cb.textContent = ch;
+          cb.onclick = ()=> selectChapter(ch, cb);
+          chaptersBox.appendChild(cb);
+        });
+        notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3><div class="noteEmpty">Select a chapter to see notes</div>';
+        return;
+      }
+
+      // Otherwise fallback to fuzzy find titles across all data
+      const results = [];
+      Object.keys(data).forEach(cls=>{
+        Object.keys(data[cls]).forEach(sub=>{
+          Object.keys(data[cls][sub]).forEach(ch=>{
+            const items = data[cls][sub][ch] || [];
+            items.forEach(it=>{
+              const combined = `${cls} ${sub} ${ch} ${it.title}`.toLowerCase();
+              if(combined.includes(q)) {
+                results.push({cls, sub, ch, it});
+              }
+            });
+          });
+        });
+      });
+
+      if(results.length){
+        // show results in notes panel and highlight first match
+        classesBox.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3>';
+        chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3>';
+        notesBox.innerHTML = '<h3 style="margin-bottom:12px">Search results</h3>';
+        results.forEach(r=>{
+          const o = document.createElement('div');
+          o.className='noteItem';
+          const left = document.createElement('div');
+          left.innerHTML = `<strong>${r.it.title}</strong><div style="font-size:12px;color:var(--muted);margin-top:6px">${r.cls} • ${r.sub} • ${r.ch}</div>`;
+          const b = document.createElement('button');
+          b.textContent='Open';
+          b.onclick = ()=> window.open(r.it.url, '_blank');
+          o.appendChild(left); o.appendChild(b);
+          notesBox.appendChild(o);
+        });
+        return;
+      }
+
+      // no results
+      notesBox.innerHTML = '<h3 style="margin-bottom:12px">Notes / PDF</h3><div class="noteEmpty">No results found for "'+q+'"</div>';
+      subjectsBox.innerHTML = '<h3 style="margin-bottom:12px">Subjects</h3><div class="noteEmpty"> — </div>';
+      chaptersBox.innerHTML = '<h3 style="margin-bottom:12px">Chapters</h3><div class="noteEmpty"> — </div>';
+    }
+
+    // initial render if main site visible
+    if(localStorage.getItem('src_selectedPlan')) {
+      // already called showMainSite earlier; ensure UI mounted
+      renderClasses();
+    }
+
+    // expose helper for debugging in console if needed
+    window._SRC = { data, selectPlan, showPlans, renderClasses };
+
   </script>
-
 </body>
 </html>
+

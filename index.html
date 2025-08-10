@@ -211,64 +211,39 @@
        PLAN UI — KEPT 100% AS-IS
        ======================= -->
 
-  <!-- ============ APPENDED STYLES & UI (main site, inter, class views) ============ -->
+  <!-- ================== Appended styles (app, dashboard, class pages) ================== -->
   <style>
-    /* main site container (appended) */
-    /* keep these rules separate so original styles remain untouched */
-    .app-hidden { display: none; }
-    .app {
-      max-width: 1200px;
-      margin: 18px auto;
-      padding: 0 18px 80px 18px;
-      font-family: Inter, system-ui, Arial, sans-serif;
-    }
+    /* app wrapper */
+    .app-hidden { display:none; }
+    .app { max-width:1200px; margin:18px auto; padding:0 18px 80px; font-family:Inter,system-ui,Arial,sans-serif; }
 
-    /* enhanced navbar (appended) */
-    .app-header {
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06);
-      position: sticky; top: 12px; z-index: 60;
-    }
-    .left { display:flex; gap:12px; align-items:center; }
-    .center { text-align:center; flex:1; }
-    .right { display:flex; gap:10px; align-items:center; }
+    /* header */
+    .app-header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06); position:sticky; top:12px; z-index:60; }
+    .logoBox { width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,#2b8bff,#6fb0ff); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:22px; }
     .small-muted { font-size:12px; color:#6b7280; }
 
-    /* Dashboard (inter-like) */
-    .dashboard {
-      margin-top:18px;
-    }
+    /* dashboard */
+    .dashboard { margin-top:18px; }
     .dash-grid { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; }
-    .class-tile {
-      background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,40,0.06);
-      min-width:220px; cursor:pointer; transition:transform .15s; display:flex; flex-direction:column; gap:8px;
-    }
+    .class-tile { background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,40,0.06); min-width:220px; cursor:pointer; transition:transform .15s ease; display:flex; flex-direction:column; gap:8px; }
     .class-tile:hover { transform: translateY(-6px); }
 
-    /* class page (class.png-like) */
-    .class-page {
-      margin-top:18px;
-    }
+    /* class page */
+    .class-page { margin-top:18px; }
     .breadcrumbs { display:flex; gap:8px; align-items:center; color:#374151; font-weight:700; }
     .breadcrumbs .arrow { font-weight:800; color:#9aa4b2; margin: 0 6px; }
 
     .subject-list, .chapter-list { margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; }
-    .subject, .chapter {
-      background:#fff; padding:14px; border-radius:10px; box-shadow:0 8px 20px rgba(10,20,40,0.05);
-      cursor:pointer; min-width:160px; text-align:center;
-    }
+    .subject, .chapter { background:#fff; padding:14px; border-radius:10px; box-shadow:0 8px 20px rgba(10,20,40,0.05); cursor:pointer; min-width:160px; text-align:center; }
     .subject.active, .chapter.active { outline: 3px solid rgba(15,110,255,0.12); }
 
-    /* notes panel */
     .notes-panel { margin-top:18px; background:#fff; padding:16px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.05); }
     .note-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px dashed #e8f2ff; margin-bottom:10px; }
     .note-btn { background:var(--blue,#0f6eff); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
 
-    /* search */
     .search { display:flex; gap:8px; align-items:center; }
     .search input { padding:10px 12px; border-radius:10px; border:1px solid #e6eefb; min-width:260px; }
 
-    /* small responsive tweaks appended */
     @media (max-width:900px) {
       .class-tile { min-width:160px; }
       .search input { min-width:140px; }
@@ -346,34 +321,31 @@
   </div>
   <!-- =============================================================== -->
 
-  <!-- ============== APPENDED APP (hidden initially) ============== -->
+  <!-- ================= App (hidden initially) ================= -->
   <div id="app" class="app app-hidden" aria-hidden="true">
-    <!-- header -->
     <div class="app-header">
-      <div class="left">
-        <div class="logoBox" style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#2b8bff,#6fb0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px">SR</div>
-        <nav style="display:flex;gap:12px;align-items:center;">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logoBox">SR</div>
+        <nav style="display:flex;gap:12px;align-items:center">
           <a href="#home" onclick="gotoHome()">Home</a>
           <a href="#courses" onclick="gotoCourses()">Courses</a>
           <a href="#teachers" onclick="gotoTeachers()">Teachers</a>
         </nav>
       </div>
 
-      <div class="center">
+      <div style="text-align:center;flex:1">
         <div style="font-weight:800;font-size:18px">Shree Ram Coaching</div>
         <div class="small-muted">Foundation • Boards • Test Prep</div>
       </div>
 
-      <div class="right">
-        <div class="search">
-          <input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" />
-        </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="search"><input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" /></div>
         <div id="planBadge" style="background:#eef6ff;color:#0f6eff;padding:8px 10px;border-radius:8px;font-weight:700">Free</div>
         <div style="width:44px;height:44px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:700">ID</div>
       </div>
     </div>
 
-    <!-- Dashboard / inter.PNG style -->
+    <!-- Dashboard -->
     <div id="dashboard" class="dashboard">
       <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px">
         <div>
@@ -385,18 +357,13 @@
         </div>
       </div>
 
-      <div class="dash-grid" id="classesGrid" style="margin-top:12px">
-        <!-- JS injects tiles -->
-      </div>
+      <div class="dash-grid" id="classesGrid" style="margin-top:12px"></div>
     </div>
 
-    <!-- Class page -->
+    <!-- Class Page -->
     <div id="classPage" class="class-page app-hidden" aria-hidden="true">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <div class="breadcrumbs" id="breadcrumbs">
-          <!-- e.g. Home > Class 10 > Chemistry -->
-        </div>
-
+        <div class="breadcrumbs" id="breadcrumbs"></div>
         <div style="display:flex;gap:8px">
           <button onclick="backToDashboard()" style="padding:8px 10px;border-radius:8px;border:none;background:#eef6ff;cursor:pointer">Back</button>
         </div>
@@ -405,37 +372,29 @@
       <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-top:18px">
         <div style="flex:1;min-width:260px">
           <div style="font-weight:800">Subjects</div>
-          <div class="subject-list" id="subjectList">
-            <!-- injected by JS -->
-          </div>
+          <div class="subject-list" id="subjectList"></div>
         </div>
 
         <div style="flex:1;min-width:260px">
           <div style="font-weight:800">Chapters</div>
-          <div class="chapter-list" id="chapterList">
-            <!-- injected by JS -->
-          </div>
+          <div class="chapter-list" id="chapterList"></div>
         </div>
 
         <div style="flex:1.2;min-width:300px">
           <div style="font-weight:800">Notes</div>
-          <div class="notes-panel" id="notesPanel">
-            <div class="small-muted">Select a chapter to see notes</div>
-          </div>
+          <div class="notes-panel" id="notesPanel"><div class="small-muted">Select a chapter to see notes</div></div>
         </div>
       </div>
     </div>
   </div>
-  <!-- ============================================================== -->
+  <!-- =============================================================== -->
 
-  <!-- ===================== APPENDED SCRIPTS ===================== -->
+  <!-- ================= App Script ================= -->
   <script>
-    /***********************
-      Data & sample PDFs
-    ***********************/
+    // sample PDF
     const samplePDF = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
-    // Data structure: classes -> subjects -> chapters -> notes[]
+    // data structure
     const data = {
       "class 9": {
         "Chemistry": {
@@ -469,9 +428,7 @@
       }
     };
 
-    /***********************
-      Helper UI functions
-    ***********************/
+    // elements
     const planModal = document.getElementById('planModal');
     const appEl = document.getElementById('app');
     const dashboardEl = document.getElementById('dashboard');
@@ -484,19 +441,17 @@
     const searchBox = document.getElementById('searchBox');
     const breadcrumbsEl = document.getElementById('breadcrumbs');
 
-    // Save original functions or elements? we kept the original UI unchanged above.
-    // We'll override selectPlan behavior here by attaching event listeners to original buttons.
-    document.getElementById('freeBtn').addEventListener('click', () => selectPlanAndOpenApp('Free'));
-    document.getElementById('proBtn').addEventListener('click', () => selectPlanAndOpenApp('Pro'));
-    document.getElementById('advBtn').addEventListener('click', () => selectPlanAndOpenApp('Advanced'));
+    // wire original modal buttons to app starter (keeps UI unchanged)
+    document.getElementById('freeBtn').addEventListener('click', () => startApp('Free'));
+    document.getElementById('proBtn').addEventListener('click', () => startApp('Pro'));
+    document.getElementById('advBtn').addEventListener('click', () => startApp('Advanced'));
 
-    // original selectPlan (user's original code) was NOT modified; but we handle behavior here
-    function selectPlanAndOpenApp(planName) {
-      // hide the modal exactly like original would
+    function startApp(planName) {
+      // hide modal exactly as original UI behavior
       planModal.style.display = 'none';
       document.body.classList.remove('modal-open');
 
-      // store chosen plan
+      // store and update badge
       localStorage.setItem('src_selectedPlan', planName);
       planBadge.textContent = planName;
 
@@ -504,18 +459,14 @@
       appEl.classList.remove('app-hidden');
       appEl.setAttribute('aria-hidden', 'false');
 
-      // render classes
       renderClasses();
-
-      // focus search
       setTimeout(()=> searchBox.focus(), 250);
     }
 
-    // On load: if plan already chosen, show app directly
     window.addEventListener('load', () => {
       const saved = localStorage.getItem('src_selectedPlan');
       if (saved) {
-        // hide modal and open app
+        // hide modal and show app immediately
         planModal.style.display = 'none';
         document.body.classList.remove('modal-open');
         planBadge.textContent = saved;
@@ -523,13 +474,14 @@
         appEl.setAttribute('aria-hidden','false');
         renderClasses();
       } else {
-        // no saved plan -> show modal exactly as your UI does
+        // show original modal like your UI does
         const modal = document.getElementById('planModal');
         modal.style.display = 'flex';
         document.body.classList.add('modal-open');
       }
     });
 
+    // render classes on dashboard
     function renderClasses() {
       classesGrid.innerHTML = '';
       Object.keys(data).forEach(cls => {
@@ -541,25 +493,18 @@
       });
     }
 
-    // Navigate to class page
     let currentClass = null;
     let currentSubject = null;
     let currentChapter = null;
 
     function openClass(cls) {
       currentClass = cls;
-      // show classPage, hide dashboard
       dashboardEl.style.display = 'none';
       classPageEl.classList.remove('app-hidden');
       classPageEl.setAttribute('aria-hidden','false');
 
-      // update breadcrumbs
       renderBreadcrumbs();
-
-      // render subjects
       renderSubjectsForClass(cls);
-
-      // clear notes/chapter lists
       chapterList.innerHTML = '';
       notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
     }
@@ -585,28 +530,23 @@
     }
 
     function selectSubject(sub, el) {
-      // visual active
       Array.from(subjectList.children).forEach(c => c.classList.remove('active'));
       el.classList.add('active');
 
       currentSubject = sub;
       currentChapter = null;
 
-      // render chapters
       chapterList.innerHTML = '';
       const chaps = Object.keys(data[currentClass][sub] || {});
       chaps.forEach(ch => {
         const cel = document.createElement('div');
         cel.className = 'chapter';
-        // show "ch1" style text
         cel.innerHTML = `<div style="font-weight:800">${ch}</div><div class="small-muted">Open notes</div>`;
         cel.onclick = () => selectChapter(ch, cel);
         chapterList.appendChild(cel);
       });
 
-      // update breadcrumbs
       renderBreadcrumbs();
-      // clear notes panel
       notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
     }
 
@@ -615,7 +555,6 @@
       el.classList.add('active');
 
       currentChapter = ch;
-      // show notes for this chapter
       const items = (data[currentClass] && data[currentClass][currentSubject] && data[currentClass][currentSubject][ch]) || [];
       notesPanel.innerHTML = '<div style="margin-bottom:10px;font-weight:800">Notes / PDFs</div>';
       if (items.length === 0) {
@@ -634,71 +573,46 @@
 
     function renderBreadcrumbs() {
       let html = `<span style="color:#9aa4b2">Home</span>`;
-      if (currentClass) {
-        html += `<span class="arrow">→</span><span>${currentClass}</span>`;
-      }
-      if (currentSubject) {
-        html += `<span class="arrow">→</span><span>${currentSubject}</span>`;
-      }
-      if (currentChapter) {
-        html += `<span class="arrow">→</span><span>${currentChapter}</span>`;
-      }
+      if (currentClass) html += `<span class="arrow">→</span><span>${currentClass}</span>`;
+      if (currentSubject) html += `<span class="arrow">→</span><span>${currentSubject}</span>`;
+      if (currentChapter) html += `<span class="arrow">→</span><span>${currentChapter}</span>`;
       breadcrumbsEl.innerHTML = html;
     }
 
-    // simple search that supports "class 10 chemistry ch1" and fuzzy
+    // search parser & fuzzy search
     function handleSearch() {
       const q = searchBox.value.trim().toLowerCase();
-      if (!q) {
-        // if empty — reset view (stay on current)
-        return;
-      }
+      if (!q) return;
 
-      // parse class token
       let clsKey = null;
-      Object.keys(data).forEach(k => {
-        if (q.includes(k)) clsKey = k;
-      });
+      Object.keys(data).forEach(k => { if (q.includes(k)) clsKey = k; });
 
-      // parse subject token
       let subjectKey = null;
       if (clsKey) {
-        Object.keys(data[clsKey]).forEach(s => {
-          if (q.includes(s.toLowerCase())) subjectKey = s;
-        });
+        Object.keys(data[clsKey]).forEach(s => { if (q.includes(s.toLowerCase())) subjectKey = s; });
       } else {
-        Object.keys(data).forEach(k=>{
-          Object.keys(data[k]).forEach(s=>{
+        Object.keys(data).forEach(k => {
+          Object.keys(data[k]).forEach(s => {
             if (q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }
           });
         });
       }
 
-      // chapter token
       let chapterKey = null;
       const chMatch = q.match(/ch(?:apter)?\s*?(\d+)/) || q.match(/ch(\d+)/);
       if (chMatch) chapterKey = 'ch' + chMatch[1];
 
-      // If exact match
       if (clsKey && subjectKey && chapterKey && data[clsKey] && data[clsKey][subjectKey] && data[clsKey][subjectKey][chapterKey]) {
-        // go to that chapter
         openClass(clsKey);
-        // select subject after a tiny delay
         setTimeout(()=> {
-          // find subject element and click
-          Array.from(subjectList.children).forEach(c => {
-            if (c.textContent === subjectKey) c.click();
-          });
+          Array.from(subjectList.children).forEach(c => { if (c.textContent === subjectKey) c.click(); });
           setTimeout(()=> {
-            Array.from(chapterList.children).forEach(c => {
-              if (c.firstChild && c.firstChild.textContent === chapterKey) c.click();
-            });
+            Array.from(chapterList.children).forEach(c => { if (c.firstChild && c.firstChild.textContent === chapterKey) c.click(); });
           }, 120);
         }, 120);
         return;
       }
 
-      // fuzzy find across titles
       const results = [];
       Object.keys(data).forEach(cls=>{
         Object.keys(data[cls]).forEach(sub=>{
@@ -712,18 +626,12 @@
       });
 
       if (results.length) {
-        // show first result
         const r = results[0];
         openClass(r.cls);
         setTimeout(()=> {
-          Array.from(subjectList.children).forEach(c => {
-            if (c.textContent === r.sub) c.click();
-          });
+          Array.from(subjectList.children).forEach(c => { if (c.textContent === r.sub) c.click(); });
           setTimeout(()=> {
-            Array.from(chapterList.children).forEach(c => {
-              if (c.firstChild && c.firstChild.textContent === r.ch) c.click();
-            });
-            // highlight note and scroll into view
+            Array.from(chapterList.children).forEach(c => { if (c.firstChild && c.firstChild.textContent === r.ch) c.click(); });
             setTimeout(()=> {
               const noteButtons = notesPanel.querySelectorAll('.note-item');
               if (noteButtons.length) noteButtons[0].scrollIntoView({behavior:'smooth', block:'center'});
@@ -733,25 +641,20 @@
         return;
       }
 
-      // no results
       alert('No notes found for: ' + q);
     }
 
-    // Utility: reset
     function resetApp() {
       localStorage.removeItem('src_selectedPlan');
       location.reload();
     }
 
-    // navigation helpers
     function gotoHome(){ window.scrollTo({top:0, behavior:'smooth'}); }
     function gotoCourses(){ window.scrollTo({top:300, behavior:'smooth'}); }
     function gotoTeachers(){ window.scrollTo({top:600, behavior:'smooth'}); }
 
-    // for debugging
-    window._SRC = { data, openClass, selectChapter, selectSubject, renderClasses };
+    window._SRC = { data, openClass, selectChapter, selectSubject: (s)=>{} };
   </script>
-  <!-- ========================================================= -->
-
+  <!-- =============================================================== -->
 </body>
 </html>

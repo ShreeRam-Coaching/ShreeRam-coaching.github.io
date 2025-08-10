@@ -211,49 +211,77 @@
        PLAN UI — KEPT 100% AS-IS
        ======================= -->
 
-  <!-- ================== Appended styles (app, dashboard, class pages) ================== -->
+
+  <!-- ================== Appended styles (app, dashboard, class views, modals) ================== -->
   <style>
     /* app wrapper */
     .app-hidden { display:none; }
     .app { max-width:1200px; margin:18px auto; padding:0 18px 80px; font-family:Inter,system-ui,Arial,sans-serif; }
 
-    /* header */
-    .app-header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06); position:sticky; top:12px; z-index:60; }
-    .logoBox { width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,#2b8bff,#6fb0ff); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:22px; }
+    /* header (merged single header) */
+    .app-header {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06);
+      position: sticky; top:12px; z-index: 60;
+      margin: 18px auto; max-width: 1100px;
+    }
+    .logoBox { width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,#2b8bff,#6fb0ff); display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px; }
+    .left, .center, .right { display:flex; align-items:center; gap:12px; }
+    .center { flex-direction:column; align-items:center; text-align:center; flex:1; }
+    .title { font-weight:800; font-size:18px; }
     .small-muted { font-size:12px; color:#6b7280; }
 
-    /* dashboard */
-    .dashboard { margin-top:18px; }
-    .dash-grid { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; }
-    .class-tile { background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,40,0.06); min-width:220px; cursor:pointer; transition:transform .15s ease; display:flex; flex-direction:column; gap:8px; }
-    .class-tile:hover { transform: translateY(-6px); }
+    /* banner */
+    .banner {
+      margin-top:18px; border-radius:12px; background:linear-gradient(90deg,#eaf4ff,#f7fbff);
+      min-height:220px; padding:28px; display:flex; align-items:flex-end; box-shadow:0 10px 30px rgba(10,20,40,0.05);
+      max-width: 1100px; margin-left: auto; margin-right: auto;
+    }
+    .banner h1{ font-size:34px; margin-bottom:6px; }
+    .banner p{ color:var(--muted,#6b7280); }
 
-    /* class page */
-    .class-page { margin-top:18px; }
-    .breadcrumbs { display:flex; gap:8px; align-items:center; color:#374151; font-weight:700; }
-    .breadcrumbs .arrow { font-weight:800; color:#9aa4b2; margin: 0 6px; }
+    /* layout flow */
+    .flow { margin-top:20px; display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; max-width:1100px; margin-left:auto; margin-right:auto; }
+    .panel { background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06); flex:1; min-width:220px; max-width: 360px; }
+    .panel h3 { margin-bottom:12px; }
+    .btn { display:block; width:100%; text-align:left; padding:12px; border-radius:10px; border:1px solid #f0f5ff; background:transparent; margin-bottom:10px; cursor:pointer; font-weight:700;}
+    .btn.active { background:linear-gradient(90deg,#f0f8ff,#ecf7ff); border-color:#dbeeff; }
 
-    .subject-list, .chapter-list { margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; }
-    .subject, .chapter { background:#fff; padding:14px; border-radius:10px; box-shadow:0 8px 20px rgba(10,20,40,0.05); cursor:pointer; min-width:160px; text-align:center; }
-    .subject.active, .chapter.active { outline: 3px solid rgba(15,110,255,0.12); }
-
-    .notes-panel { margin-top:18px; background:#fff; padding:16px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.05); }
-    .note-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px dashed #e8f2ff; margin-bottom:10px; }
+    /* notes */
+    .notes-panel { flex:1.2; min-width:280px; max-width: 540px; }
+    .note-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px dashed #eef6ff; margin-bottom:10px; }
     .note-btn { background:var(--blue,#0f6eff); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
 
-    .search { display:flex; gap:8px; align-items:center; }
-    .search input { padding:10px 12px; border-radius:10px; border:1px solid #e6eefb; min-width:260px; }
+    /* breadcrumbs */
+    .breadcrumbs { display:flex; gap:8px; align-items:center; color:#374151; font-weight:700; }
 
-    @media (max-width:900px) {
-      .class-tile { min-width:160px; }
-      .search input { min-width:140px; }
+    /* registration modal (Yuva) */
+    .modal-yi { display:none; position:fixed; inset:0; background: rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1001; }
+    .modal-yi .card { background:#fff; border-radius:12px; padding:18px; width:100%; max-width:420px; box-shadow:0 12px 40px rgba(0,0,0,0.2); }
+    .modal-yi input[type="text"], .modal-yi input[type="email"], .modal-yi input[type="password"], .modal-yi select { width:100%; padding:10px; border-radius:8px; border:1px solid #e6eefb; margin-bottom:10px; }
+    .modal-yi label { display:block; margin-bottom:8px; font-weight:700; }
+
+    /* terms */
+    .terms { background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.04); margin-top:20px; max-width:1100px; margin-left:auto; margin-right:auto; }
+
+    /* footer teachers */
+    footer.site-footer { margin-top:28px; padding:28px; text-align:center; color:#6b7280; background:linear-gradient(180deg,#fff,#fbfdff); box-shadow:0 8px 30px rgba(10,20,40,0.02); border-radius:12px; max-width:1100px; margin-left:auto; margin-right:auto; }
+
+    /* profile / small avatar */
+    .avatar { width:44px; height:44px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+    /* responsive */
+    @media (max-width:880px) {
+      .banner { min-height:140px; padding:18px; }
+      .flow { flex-direction:column; }
+      .app-header { margin: 12px; }
     }
   </style>
 </head>
 <body>
 
   <!-- ================= original container (unchanged) ================= -->
-  <div class="container">
+  <div class="container" id="originalContainer">
     <header class="nav">
       <div class="brand">
         <div class="logo">SR</div>
@@ -264,9 +292,9 @@
       </div>
 
       <nav class="nav-links">
-        <a href="#courses">Courses</a>
-        <a href="#teachers">Teachers</a>
-        <a href="#contact">Contact</a>
+        <a href="#courses" onclick="gotoSection('courses')">Courses</a>
+        <a href="#teachers" onclick="gotoSection('teachers')">Teachers</a>
+        <a href="#contact" onclick="gotoSection('contact')">Contact</a>
       </nav>
     </header>
 
@@ -323,78 +351,168 @@
 
   <!-- ================= App (hidden initially) ================= -->
   <div id="app" class="app app-hidden" aria-hidden="true">
-    <div class="app-header">
-      <div style="display:flex;gap:12px;align-items:center">
+
+    <!-- Header (single merged header) -->
+    <div class="app-header" role="banner">
+      <div class="left">
         <div class="logoBox">SR</div>
         <nav style="display:flex;gap:12px;align-items:center">
           <a href="#home" onclick="gotoHome()">Home</a>
-          <a href="#courses" onclick="gotoCourses()">Courses</a>
-          <a href="#teachers" onclick="gotoTeachers()">Teachers</a>
+          <a href="#courses" onclick="gotoSection('courses')">Courses</a>
+          <a href="#teachers" onclick="gotoSection('teachers')">Teachers</a>
         </nav>
       </div>
 
-      <div style="text-align:center;flex:1">
-        <div style="font-weight:800;font-size:18px">Shree Ram Coaching</div>
+      <div class="center">
+        <div class="title">Shree Ram Coaching</div>
         <div class="small-muted">Foundation • Boards • Test Prep</div>
       </div>
 
-      <div style="display:flex;gap:10px;align-items:center">
-        <div class="search"><input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" /></div>
-        <div id="planBadge" style="background:#eef6ff;color:#0f6eff;padding:8px 10px;border-radius:8px;font-weight:700">Free</div>
-        <div style="width:44px;height:44px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:700">ID</div>
+      <div class="right">
+        <div class="search">
+          <input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" />
+        </div>
+        <div id="planBadge" style="background:#eef6ff;color:#0f6eff;padding:8px 10px;border-radius:8px;font-weight:700;margin-left:8px">Free</div>
+        <div id="userArea" style="display:flex;gap:10px;align-items:center;margin-left:8px">
+          <div id="avatar" class="avatar" title="Not logged">ID</div>
+          <button id="loginBtn" onclick="openYuvaModal()">Yuva</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner -->
+    <div class="banner" role="img" aria-label="Banner Placeholder">
+      <div>
+        <h1>Welcome to Shree Ram Coaching</h1>
+        <p style="margin-top:6px">Your learning journey — structured, simple, smart.</p>
       </div>
     </div>
 
     <!-- Dashboard -->
-    <div id="dashboard" class="dashboard">
-      <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <div>
-          <h2 style="margin:0">Classes</h2>
-          <div class="small-muted">Pick a class to start</div>
-        </div>
-        <div style="display:flex;gap:10px">
-          <button onclick="resetApp()" style="padding:8px 12px;border-radius:8px;border:none;background:#f3f4f6;cursor:pointer">Reset</button>
+    <div class="flow" style="margin-top:24px;">
+      <div class="panel classes" id="classesPanel">
+        <h3>Classes</h3>
+        <div id="classesBox">
+          <!-- buttons injected by JS -->
         </div>
       </div>
 
-      <div class="dash-grid" id="classesGrid" style="margin-top:12px"></div>
-    </div>
-
-    <!-- Class Page -->
-    <div id="classPage" class="class-page app-hidden" aria-hidden="true">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <div class="breadcrumbs" id="breadcrumbs"></div>
-        <div style="display:flex;gap:8px">
-          <button onclick="backToDashboard()" style="padding:8px 10px;border-radius:8px;border:none;background:#eef6ff;cursor:pointer">Back</button>
-        </div>
+      <div class="panel subjects" id="subjectsPanel">
+        <h3>Subjects</h3>
+        <div id="subjectsBox" class="small-muted">Select a class to see subjects</div>
       </div>
 
-      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-top:18px">
-        <div style="flex:1;min-width:260px">
-          <div style="font-weight:800">Subjects</div>
-          <div class="subject-list" id="subjectList"></div>
-        </div>
+      <div class="panel chapters" id="chaptersPanel">
+        <h3>Chapters</h3>
+        <div id="chaptersBox" class="small-muted">Select a subject to see chapters</div>
+      </div>
 
-        <div style="flex:1;min-width:260px">
-          <div style="font-weight:800">Chapters</div>
-          <div class="chapter-list" id="chapterList"></div>
-        </div>
-
-        <div style="flex:1.2;min-width:300px">
-          <div style="font-weight:800">Notes</div>
-          <div class="notes-panel" id="notesPanel"><div class="small-muted">Select a chapter to see notes</div></div>
-        </div>
+      <div class="panel notes-panel" id="notesPanel">
+        <h3>Notes / PDFs</h3>
+        <div id="notesBox" class="small-muted">Select a chapter to see notes</div>
       </div>
     </div>
+
+    <!-- Breadcrumbs -->
+    <div style="max-width:1100px;margin:18px auto">
+      <div id="breadcrumbs" class="breadcrumbs"><span style="color:#9aa4b2">Home</span></div>
+    </div>
+
+    <!-- Terms & Conditions -->
+    <div class="terms" id="termsBox">
+      <h3>Terms & Conditions (placeholder)</h3>
+      <p>This is a placeholder Terms & Conditions section. Replace this text with your official T&amp;C copy when ready. Users must accept Terms while registering.</p>
+      <ul>
+        <li>By using this site you agree to demo terms.</li>
+        <li>User data is stored locally in the browser for demonstration only.</li>
+        <li>Do not store sensitive information on client-side storage in production.</li>
+      </ul>
+    </div>
+
+    <!-- Footer / Teachers -->
+    <footer class="site-footer" id="teachers">
+      <h3>Our Teachers</h3>
+      <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <div style="width:200px; text-align:center">
+          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
+          <div style="font-weight:800;margin-top:8px">Mohnesh Sir</div>
+          <div class="small-muted">SST</div>
+        </div>
+        <div style="width:200px; text-align:center">
+          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
+          <div style="font-weight:800;margin-top:8px">Deepika Mam</div>
+          <div class="small-muted">Science</div>
+        </div>
+        <div style="width:200px; text-align:center">
+          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
+          <div style="font-weight:800;margin-top:8px">Rohit Sir</div>
+          <div class="small-muted">Maths</div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;color:#9aa4b2;font-size:13px">
+        © Shree Ram Coaching — Demo site. All rights reserved.
+      </div>
+    </footer>
+
   </div>
   <!-- =============================================================== -->
 
-  <!-- ================= App Script ================= -->
+  <!-- ================= Registration (Yuva) Modal (client-side auth) ================= -->
+  <div id="yuvaModal" class="modal-yi" role="dialog" aria-modal="true" aria-labelledby="yuvaTitle">
+    <div class="card">
+      <h2 id="yuvaTitle">Yuva — Register / Login</h2>
+
+      <div id="authArea">
+        <label for="yuvaName">Full Name</label>
+        <input id="yuvaName" type="text" placeholder="Your full name" />
+
+        <label for="yuvaEmail">Gmail Address</label>
+        <input id="yuvaEmail" type="email" placeholder="you@gmail.com" />
+
+        <label for="yuvaClass">Class</label>
+        <select id="yuvaClass">
+          <option value="">Select Class</option>
+          <option>class 9</option>
+          <option>class 10</option>
+          <option>class 11</option>
+        </select>
+
+        <label for="yuvaPassword">Password (demo only)</label>
+        <input id="yuvaPassword" type="password" placeholder="Choose a password" />
+
+        <label for="yuvaPhoto">Profile Photo (optional)</label>
+        <input id="yuvaPhoto" type="file" accept="image/*" />
+
+        <div style="margin:8px 0">
+          <label><input id="yuvaTerms" type="checkbox" /> I accept terms &amp; conditions</label>
+        </div>
+
+        <div style="display:flex;gap:8px;justify-content:space-between">
+          <button onclick="yuvaRegister()">Register</button>
+          <button onclick="yuvaLogin()">Login</button>
+          <button onclick="closeYuvaModal()" style="background:#e74c3c">Close</button>
+        </div>
+
+        <div style="margin-top:12px;color:#9aa4b2;font-size:13px">
+          Note: This demo stores account details in your browser (localStorage). For production, connect a secure backend.
+        </div>
+      </div>
+
+      <div id="profileArea" style="display:none"></div>
+    </div>
+  </div>
+  <!-- =============================================================================== -->
+
+
+  <!-- ================= App Script (large, feature-rich) ================= -->
   <script>
-    // sample PDF
+    /*************************************************************************
+     * Data & sample PDFs
+     * - Edit the `data` object to add/replace classes, subjects, chapters, PDFs
+     **************************************************************************/
     const samplePDF = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
-    // data structure
     const data = {
       "class 9": {
         "Chemistry": {
@@ -428,146 +546,147 @@
       }
     };
 
-    // elements
-    const planModal = document.getElementById('planModal');
-    const appEl = document.getElementById('app');
-    const dashboardEl = document.getElementById('dashboard');
-    const classPageEl = document.getElementById('classPage');
-    const classesGrid = document.getElementById('classesGrid');
-    const subjectList = document.getElementById('subjectList');
-    const chapterList = document.getElementById('chapterList');
-    const notesPanel = document.getElementById('notesPanel');
-    const planBadge = document.getElementById('planBadge');
-    const searchBox = document.getElementById('searchBox');
+    /*************************************************************************
+     * Basic element refs
+     **************************************************************************/
+    const planModal     = document.getElementById('planModal');
+    const appEl         = document.getElementById('app');
+    const classesBox    = document.getElementById('classesBox');
+    const subjectsBox   = document.getElementById('subjectsBox');
+    const chaptersBox   = document.getElementById('chaptersBox');
+    const notesBox      = document.getElementById('notesBox');
     const breadcrumbsEl = document.getElementById('breadcrumbs');
+    const planBadgeEl   = document.getElementById('planBadge');
+    const avatarEl      = document.getElementById('avatar');
+    const loginBtnEl    = document.getElementById('loginBtn');
+    const searchBox     = document.getElementById('searchBox');
 
-    // wire original modal buttons to app starter (keeps UI unchanged)
-    document.getElementById('freeBtn').addEventListener('click', () => startApp('Free'));
-    document.getElementById('proBtn').addEventListener('click', () => startApp('Pro'));
-    document.getElementById('advBtn').addEventListener('click', () => startApp('Advanced'));
+    /*************************************************************************
+     * Hook original modal buttons (kept UI unchanged)
+     **************************************************************************/
+    document.getElementById('freeBtn').addEventListener('click', () => selectPlanAndOpenApp('Free'));
+    document.getElementById('proBtn').addEventListener('click', () => selectPlanAndOpenApp('Pro'));
+    document.getElementById('advBtn').addEventListener('click', () => selectPlanAndOpenApp('Advanced'));
 
-    function startApp(planName) {
-      // hide modal exactly as original UI behavior
+    function selectPlanAndOpenApp(planName) {
       planModal.style.display = 'none';
       document.body.classList.remove('modal-open');
-
-      // store and update badge
       localStorage.setItem('src_selectedPlan', planName);
-      planBadge.textContent = planName;
+      planBadgeEl.textContent = planName;
 
       // show app
       appEl.classList.remove('app-hidden');
-      appEl.setAttribute('aria-hidden', 'false');
+      appEl.setAttribute('aria-hidden','false');
 
+      // render classes and UI
       renderClasses();
-      setTimeout(()=> searchBox.focus(), 250);
+
+      // try to auto-login if local user exists
+      loadLocalProfileToHeader();
     }
 
+    // On initial load: either show modal (UI) or app (previous plan)
     window.addEventListener('load', () => {
-      const saved = localStorage.getItem('src_selectedPlan');
-      if (saved) {
-        // hide modal and show app immediately
+      const savedPlan = localStorage.getItem('src_selectedPlan');
+      if (savedPlan) {
+        // hide modal and show app
         planModal.style.display = 'none';
         document.body.classList.remove('modal-open');
-        planBadge.textContent = saved;
+        planBadgeEl.textContent = savedPlan;
         appEl.classList.remove('app-hidden');
         appEl.setAttribute('aria-hidden','false');
         renderClasses();
+        loadLocalProfileToHeader();
       } else {
-        // show original modal like your UI does
-        const modal = document.getElementById('planModal');
-        modal.style.display = 'flex';
+        // show original modal
+        planModal.style.display = 'flex';
         document.body.classList.add('modal-open');
       }
     });
 
-    // render classes on dashboard
+    /*************************************************************************
+     * Render Classes (dashboard)
+     **************************************************************************/
     function renderClasses() {
-      classesGrid.innerHTML = '';
+      classesBox.innerHTML = '';
       Object.keys(data).forEach(cls => {
-        const tile = document.createElement('div');
-        tile.className = 'class-tile';
-        tile.innerHTML = `<div style="font-weight:900">${cls.toUpperCase()}</div><div class="small-muted">See subjects & chapters</div>`;
-        tile.onclick = () => openClass(cls);
-        classesGrid.appendChild(tile);
+        const btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.textContent = cls;
+        btn.onclick = () => selectClass(cls, btn);
+        classesBox.appendChild(btn);
       });
+
+      // reset others
+      subjectsBox.innerHTML = '<div class="small-muted">Select a class to see subjects</div>';
+      chaptersBox.innerHTML = '<div class="small-muted">Select a subject to see chapters</div>';
+      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
+      renderBreadcrumbs();
     }
 
     let currentClass = null;
     let currentSubject = null;
     let currentChapter = null;
 
-    function openClass(cls) {
+    function selectClass(cls, btnEl) {
       currentClass = cls;
-      dashboardEl.style.display = 'none';
-      classPageEl.classList.remove('app-hidden');
-      classPageEl.setAttribute('aria-hidden','false');
-
-      renderBreadcrumbs();
-      renderSubjectsForClass(cls);
-      chapterList.innerHTML = '';
-      notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
-    }
-
-    function backToDashboard() {
-      classPageEl.classList.add('app-hidden');
-      classPageEl.setAttribute('aria-hidden','true');
-      dashboardEl.style.display = 'block';
-      currentClass = currentSubject = currentChapter = null;
-      renderBreadcrumbs();
-    }
-
-    function renderSubjectsForClass(cls) {
-      subjectList.innerHTML = '';
-      const subs = Object.keys(data[cls] || {});
-      subs.forEach(sub => {
-        const el = document.createElement('div');
-        el.className = 'subject';
-        el.textContent = sub;
-        el.onclick = () => selectSubject(sub, el);
-        subjectList.appendChild(el);
-      });
-    }
-
-    function selectSubject(sub, el) {
-      Array.from(subjectList.children).forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-
-      currentSubject = sub;
+      currentSubject = null;
       currentChapter = null;
 
-      chapterList.innerHTML = '';
-      const chaps = Object.keys(data[currentClass][sub] || {});
-      chaps.forEach(ch => {
-        const cel = document.createElement('div');
-        cel.className = 'chapter';
-        cel.innerHTML = `<div style="font-weight:800">${ch}</div><div class="small-muted">Open notes</div>`;
-        cel.onclick = () => selectChapter(ch, cel);
-        chapterList.appendChild(cel);
+      // highlight active
+      Array.from(classesBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      // render subjects
+      const subs = Object.keys(data[cls] || {});
+      subjectsBox.innerHTML = '';
+      subs.forEach(s => {
+        const b = document.createElement('button'); b.className = 'btn';
+        b.textContent = s; b.onclick = () => selectSubject(s, b);
+        subjectsBox.appendChild(b);
       });
 
+      chaptersBox.innerHTML = '<div class="small-muted">Select a subject to see chapters</div>';
+      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
       renderBreadcrumbs();
-      notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
     }
 
-    function selectChapter(ch, el) {
-      Array.from(chapterList.children).forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
+    function selectSubject(sub, btnEl) {
+      currentSubject = sub;
+      currentChapter = null;
+      Array.from(subjectsBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
 
-      currentChapter = ch;
-      const items = (data[currentClass] && data[currentClass][currentSubject] && data[currentClass][currentSubject][ch]) || [];
-      notesPanel.innerHTML = '<div style="margin-bottom:10px;font-weight:800">Notes / PDFs</div>';
-      if (items.length === 0) {
-        notesPanel.innerHTML += '<div class="small-muted">No notes available</div>';
-        return;
-      }
-      items.forEach(it => {
-        const n = document.createElement('div');
-        n.className = 'note-item';
-        n.innerHTML = `<div style="font-weight:700">${it.title}</div><div><button class="note-btn" onclick="window.open('${it.url}','_blank')">Open</button></div>`;
-        notesPanel.appendChild(n);
+      // render chapters
+      const chs = Object.keys(data[currentClass][sub] || {});
+      chaptersBox.innerHTML = '';
+      chs.forEach(ch => {
+        const b = document.createElement('button'); b.className = 'btn';
+        b.textContent = ch; b.onclick = () => selectChapter(ch, b);
+        chaptersBox.appendChild(b);
       });
 
+      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
+      renderBreadcrumbs();
+    }
+
+    function selectChapter(ch, btnEl) {
+      currentChapter = ch;
+      Array.from(chaptersBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      // render notes
+      const items = (data[currentClass] && data[currentClass][currentSubject] && data[currentClass][currentSubject][ch]) || [];
+      notesBox.innerHTML = '';
+      if (!items.length) {
+        notesBox.innerHTML = '<div class="small-muted">No notes available</div>';
+      } else {
+        items.forEach(it => {
+          const n = document.createElement('div'); n.className = 'note-item';
+          n.innerHTML = `<div style="font-weight:700">${it.title}</div><div><button class="note-btn" onclick="window.open('${it.url}','_blank')">Open</button></div>`;
+          notesBox.appendChild(n);
+        });
+      }
       renderBreadcrumbs();
     }
 
@@ -579,40 +698,45 @@
       breadcrumbsEl.innerHTML = html;
     }
 
-    // search parser & fuzzy search
+    /*************************************************************************
+     * Search: supports phrases like "class 10 chemistry ch1"
+     **************************************************************************/
     function handleSearch() {
-      const q = searchBox.value.trim().toLowerCase();
+      const q = (searchBox.value || '').trim().toLowerCase();
       if (!q) return;
 
+      // find class token
       let clsKey = null;
       Object.keys(data).forEach(k => { if (q.includes(k)) clsKey = k; });
 
+      // find subject token
       let subjectKey = null;
       if (clsKey) {
         Object.keys(data[clsKey]).forEach(s => { if (q.includes(s.toLowerCase())) subjectKey = s; });
       } else {
         Object.keys(data).forEach(k => {
-          Object.keys(data[k]).forEach(s => {
-            if (q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }
-          });
+          Object.keys(data[k]).forEach(s => { if (q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }});
         });
       }
 
+      // find chapter (ch1 etc)
       let chapterKey = null;
       const chMatch = q.match(/ch(?:apter)?\s*?(\d+)/) || q.match(/ch(\d+)/);
       if (chMatch) chapterKey = 'ch' + chMatch[1];
 
+      // if exact found
       if (clsKey && subjectKey && chapterKey && data[clsKey] && data[clsKey][subjectKey] && data[clsKey][subjectKey][chapterKey]) {
-        openClass(clsKey);
+        selectClass(clsKey, Array.from(classesBox.children).find(b => b.textContent === clsKey));
         setTimeout(()=> {
-          Array.from(subjectList.children).forEach(c => { if (c.textContent === subjectKey) c.click(); });
+          Array.from(subjectsBox.children).find(b => b.textContent === subjectKey).click();
           setTimeout(()=> {
-            Array.from(chapterList.children).forEach(c => { if (c.firstChild && c.firstChild.textContent === chapterKey) c.click(); });
+            Array.from(chaptersBox.children).find(b => b.textContent === chapterKey).click();
           }, 120);
-        }, 120);
+        },120);
         return;
       }
 
+      // fuzzy search in note titles
       const results = [];
       Object.keys(data).forEach(cls=>{
         Object.keys(data[cls]).forEach(sub=>{
@@ -627,34 +751,197 @@
 
       if (results.length) {
         const r = results[0];
-        openClass(r.cls);
+        selectClass(r.cls, Array.from(classesBox.children).find(b => b.textContent === r.cls));
         setTimeout(()=> {
-          Array.from(subjectList.children).forEach(c => { if (c.textContent === r.sub) c.click(); });
+          Array.from(subjectsBox.children).find(b => b.textContent === r.sub).click();
           setTimeout(()=> {
-            Array.from(chapterList.children).forEach(c => { if (c.firstChild && c.firstChild.textContent === r.ch) c.click(); });
+            Array.from(chaptersBox.children).find(b => b.textContent === r.ch).click();
             setTimeout(()=> {
-              const noteButtons = notesPanel.querySelectorAll('.note-item');
-              if (noteButtons.length) noteButtons[0].scrollIntoView({behavior:'smooth', block:'center'});
-            }, 150);
+              const firstNote = notesBox.querySelector('.note-item');
+              if (firstNote) firstNote.scrollIntoView({behavior:'smooth', block:'center'});
+            }, 200);
           }, 120);
         }, 120);
         return;
       }
 
-      alert('No notes found for: ' + q);
+      alert('No results found for: ' + q);
     }
 
-    function resetApp() {
-      localStorage.removeItem('src_selectedPlan');
-      location.reload();
+    /*************************************************************************
+     * Registration & Login (client-side, localStorage)
+     **************************************************************************/
+    function openYuvaModal(){
+      document.getElementById('yuvaModal').style.display = 'flex';
+      // if profile exists show profile area
+      loadLocalProfileToModal();
+    }
+    function closeYuvaModal(){
+      document.getElementById('yuvaModal').style.display = 'none';
     }
 
+    // helper: read image file as base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        if (!file) return resolve(null);
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function yuvaRegister() {
+      const name = document.getElementById('yuvaName').value.trim();
+      const email = document.getElementById('yuvaEmail').value.trim().toLowerCase();
+      const cls = document.getElementById('yuvaClass').value;
+      const pwd = document.getElementById('yuvaPassword').value;
+      const photoInput = document.getElementById('yuvaPhoto');
+      const terms = document.getElementById('yuvaTerms').checked;
+
+      if (!name) return alert('Enter name');
+      if (!email || !email.endsWith('@gmail.com')) return alert('Use a valid Gmail address (example@gmail.com)');
+      if (!cls) return alert('Select class');
+      if (!pwd || pwd.length < 4) return alert('Choose a password (min 4 chars)');
+      if (!terms) return alert('Accept Terms & Conditions');
+
+      // convert photo
+      const file = photoInput.files && photoInput.files[0];
+      const photoBase64 = await fileToBase64(file);
+
+      // store account in localStorage under key 'yuva_accounts'
+      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
+      if (accounts[email]) {
+        if (!confirm('Account with this email exists. Overwrite?')) return;
+      }
+      accounts[email] = { name, email, cls, pwd, photo: photoBase64, created: new Date().toISOString() };
+      localStorage.setItem('yuva_accounts', JSON.stringify(accounts));
+
+      // auto-login
+      localStorage.setItem('yuva_logged_in', email);
+      closeYuvaModal();
+      updateHeaderAfterLogin();
+      alert('Registration successful. Welcome, ' + name);
+    }
+
+    function yuvaLogin() {
+      const email = document.getElementById('yuvaEmail').value.trim().toLowerCase();
+      const pwd = document.getElementById('yuvaPassword').value;
+
+      if (!email || !pwd) return alert('Enter email & password');
+
+      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
+      const acc = accounts[email];
+      if (!acc) return alert('Account not found. Please register.');
+      if (acc.pwd !== pwd) return alert('Incorrect password.');
+
+      localStorage.setItem('yuva_logged_in', email);
+      closeYuvaModal();
+      updateHeaderAfterLogin();
+      alert('Welcome back, ' + acc.name);
+    }
+
+    function logoutYuva() {
+      localStorage.removeItem('yuva_logged_in');
+      updateHeaderAfterLogin();
+      alert('Logged out.');
+    }
+
+    function loadLocalProfileToModal() {
+      const logged = localStorage.getItem('yuva_logged_in');
+      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
+      const profileArea = document.getElementById('profileArea');
+      profileArea.style.display = 'none';
+      document.getElementById('authArea').style.display = 'block';
+
+      if (logged && accounts[logged]) {
+        const p = accounts[logged];
+        // prefill form with account data
+        document.getElementById('yuvaName').value = p.name || '';
+        document.getElementById('yuvaEmail').value = p.email || '';
+        document.getElementById('yuvaClass').value = p.cls || '';
+        document.getElementById('yuvaPassword').value = p.pwd || '';
+        // show profile area optionally
+        document.getElementById('profileArea').style.display = 'none';
+      } else {
+        // clear fields
+        document.getElementById('yuvaName').value = '';
+        document.getElementById('yuvaEmail').value = '';
+        document.getElementById('yuvaClass').value = '';
+        document.getElementById('yuvaPassword').value = '';
+      }
+    }
+
+    function updateHeaderAfterLogin(){
+      const logged = localStorage.getItem('yuva_logged_in');
+      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
+      if (logged && accounts[logged]) {
+        const p = accounts[logged];
+        // avatar update
+        if (p.photo) {
+          avatarEl.style.backgroundImage = `url(${p.photo})`;
+          avatarEl.style.backgroundSize = 'cover';
+          avatarEl.textContent = '';
+        } else {
+          avatarEl.textContent = p.name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
+        }
+        loginBtnEl.textContent = 'Profile';
+        loginBtnEl.onclick = () => openProfileMenu();
+      } else {
+        avatarEl.style.backgroundImage = '';
+        avatarEl.textContent = 'ID';
+        loginBtnEl.textContent = 'Yuva';
+        loginBtnEl.onclick = () => openYuvaModal();
+      }
+    }
+
+    function openProfileMenu(){
+      // show a small menu (confirm logout / view profile)
+      const logged = localStorage.getItem('yuva_logged_in');
+      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
+      if (!logged || !accounts[logged]) {
+        openYuvaModal(); return;
+      }
+      const p = accounts[logged];
+      const menu = `
+        Name: ${p.name}\nClass: ${p.cls}\nEmail: ${p.email}\n\nClick OK to logout, Cancel to close.
+      `;
+      if (confirm(menu)) {
+        logoutYuva();
+      }
+    }
+
+    function loadLocalProfileToHeader(){
+      updateHeaderAfterLogin();
+    }
+
+    // expose some helpers for debugging
+    window._SITE = { data };
+
+    /*************************************************************************
+     * small helpers & navigation functions
+     **************************************************************************/
     function gotoHome(){ window.scrollTo({top:0, behavior:'smooth'}); }
-    function gotoCourses(){ window.scrollTo({top:300, behavior:'smooth'}); }
-    function gotoTeachers(){ window.scrollTo({top:600, behavior:'smooth'}); }
+    function gotoSection(id){
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({behavior:'smooth'});
+    }
 
-    window._SRC = { data, openClass, selectChapter, selectSubject: (s)=>{} };
+    // small UI helpers to open Yuva modal from header button
+    function openYuvaModalFromHeader(){
+      openYuvaModal();
+    }
+
+    // attach a few convenience events
+    // ensure header reflects login state immediately
+    updateHeaderAfterLogin();
+
+    /*************************************************************************
+     * End app script
+     **************************************************************************/
+
   </script>
-  <!-- =============================================================== -->
+
 </body>
 </html>

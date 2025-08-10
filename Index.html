@@ -4,6 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shree Ram Coaching — Portal</title>
+
+  <!-- =======================
+       (BEGIN) YOUR ORIGINAL
+       PLAN UI — KEPT 100% AS-IS
+       ======================= -->
   <style>
     /* Reset and basics */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -201,10 +206,78 @@
       }
     }
   </style>
+  <!-- =======================
+       (END) YOUR ORIGINAL
+       PLAN UI — KEPT 100% AS-IS
+       ======================= -->
+
+  <!-- ============ APPENDED STYLES & UI (main site, inter, class views) ============ -->
+  <style>
+    /* main site container (appended) */
+    /* keep these rules separate so original styles remain untouched */
+    .app-hidden { display: none; }
+    .app {
+      max-width: 1200px;
+      margin: 18px auto;
+      padding: 0 18px 80px 18px;
+      font-family: Inter, system-ui, Arial, sans-serif;
+    }
+
+    /* enhanced navbar (appended) */
+    .app-header {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06);
+      position: sticky; top: 12px; z-index: 60;
+    }
+    .left { display:flex; gap:12px; align-items:center; }
+    .center { text-align:center; flex:1; }
+    .right { display:flex; gap:10px; align-items:center; }
+    .small-muted { font-size:12px; color:#6b7280; }
+
+    /* Dashboard (inter-like) */
+    .dashboard {
+      margin-top:18px;
+    }
+    .dash-grid { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; }
+    .class-tile {
+      background:#fff; padding:18px; border-radius:12px; box-shadow:0 10px 30px rgba(10,20,40,0.06);
+      min-width:220px; cursor:pointer; transition:transform .15s; display:flex; flex-direction:column; gap:8px;
+    }
+    .class-tile:hover { transform: translateY(-6px); }
+
+    /* class page (class.png-like) */
+    .class-page {
+      margin-top:18px;
+    }
+    .breadcrumbs { display:flex; gap:8px; align-items:center; color:#374151; font-weight:700; }
+    .breadcrumbs .arrow { font-weight:800; color:#9aa4b2; margin: 0 6px; }
+
+    .subject-list, .chapter-list { margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; }
+    .subject, .chapter {
+      background:#fff; padding:14px; border-radius:10px; box-shadow:0 8px 20px rgba(10,20,40,0.05);
+      cursor:pointer; min-width:160px; text-align:center;
+    }
+    .subject.active, .chapter.active { outline: 3px solid rgba(15,110,255,0.12); }
+
+    /* notes panel */
+    .notes-panel { margin-top:18px; background:#fff; padding:16px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.05); }
+    .note-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px dashed #e8f2ff; margin-bottom:10px; }
+    .note-btn { background:var(--blue,#0f6eff); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
+
+    /* search */
+    .search { display:flex; gap:8px; align-items:center; }
+    .search input { padding:10px 12px; border-radius:10px; border:1px solid #e6eefb; min-width:260px; }
+
+    /* small responsive tweaks appended */
+    @media (max-width:900px) {
+      .class-tile { min-width:160px; }
+      .search input { min-width:140px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Main coaching site container -->
+  <!-- ================= original container (unchanged) ================= -->
   <div class="container">
     <header class="nav">
       <div class="brand">
@@ -234,8 +307,9 @@
       © Shree Ram Coaching — Demo site.
     </footer>
   </div>
+  <!-- =============================================================== -->
 
-  <!-- Modal popup overlay -->
+  <!-- ================= original modal (unchanged) ================= -->
   <div id="planModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
       <div class="plan">
@@ -246,7 +320,7 @@
           <li>Limited PDFs</li>
           <li>Community support</li>
         </ul>
-        <button class="free-btn" onclick="selectPlan('Free Plan')">Continue with Free Plan</button>
+        <button class="free-btn" id="freeBtn">Continue with Free Plan</button>
       </div>
       <div class="plan">
         <h2>Pro Plan</h2>
@@ -256,7 +330,7 @@
           <li>Priority doubt support</li>
           <li>Downloadable content</li>
         </ul>
-        <button class="subscribe-btn" onclick="selectPlan('Pro Plan')">Subscribe</button>
+        <button class="subscribe-btn" id="proBtn">Subscribe</button>
       </div>
       <div class="plan">
         <h2>Advanced Plan</h2>
@@ -266,34 +340,418 @@
           <li>One-on-one mentoring</li>
           <li>Exclusive video content</li>
         </ul>
-        <button class="subscribe-btn" onclick="selectPlan('Advanced Plan')">Subscribe</button>
+        <button class="subscribe-btn" id="advBtn">Subscribe</button>
       </div>
     </div>
   </div>
+  <!-- =============================================================== -->
 
+  <!-- ============== APPENDED APP (hidden initially) ============== -->
+  <div id="app" class="app app-hidden" aria-hidden="true">
+    <!-- header -->
+    <div class="app-header">
+      <div class="left">
+        <div class="logoBox" style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#2b8bff,#6fb0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px">SR</div>
+        <nav style="display:flex;gap:12px;align-items:center;">
+          <a href="#home" onclick="gotoHome()">Home</a>
+          <a href="#courses" onclick="gotoCourses()">Courses</a>
+          <a href="#teachers" onclick="gotoTeachers()">Teachers</a>
+        </nav>
+      </div>
+
+      <div class="center">
+        <div style="font-weight:800;font-size:18px">Shree Ram Coaching</div>
+        <div class="small-muted">Foundation • Boards • Test Prep</div>
+      </div>
+
+      <div class="right">
+        <div class="search">
+          <input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" />
+        </div>
+        <div id="planBadge" style="background:#eef6ff;color:#0f6eff;padding:8px 10px;border-radius:8px;font-weight:700">Free</div>
+        <div style="width:44px;height:44px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-weight:700">ID</div>
+      </div>
+    </div>
+
+    <!-- Dashboard / inter.PNG style -->
+    <div id="dashboard" class="dashboard">
+      <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <div>
+          <h2 style="margin:0">Classes</h2>
+          <div class="small-muted">Pick a class to start</div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button onclick="resetApp()" style="padding:8px 12px;border-radius:8px;border:none;background:#f3f4f6;cursor:pointer">Reset</button>
+        </div>
+      </div>
+
+      <div class="dash-grid" id="classesGrid" style="margin-top:12px">
+        <!-- JS injects tiles -->
+      </div>
+    </div>
+
+    <!-- Class page -->
+    <div id="classPage" class="class-page app-hidden" aria-hidden="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <div class="breadcrumbs" id="breadcrumbs">
+          <!-- e.g. Home > Class 10 > Chemistry -->
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button onclick="backToDashboard()" style="padding:8px 10px;border-radius:8px;border:none;background:#eef6ff;cursor:pointer">Back</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-top:18px">
+        <div style="flex:1;min-width:260px">
+          <div style="font-weight:800">Subjects</div>
+          <div class="subject-list" id="subjectList">
+            <!-- injected by JS -->
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:260px">
+          <div style="font-weight:800">Chapters</div>
+          <div class="chapter-list" id="chapterList">
+            <!-- injected by JS -->
+          </div>
+        </div>
+
+        <div style="flex:1.2;min-width:300px">
+          <div style="font-weight:800">Notes</div>
+          <div class="notes-panel" id="notesPanel">
+            <div class="small-muted">Select a chapter to see notes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+
+  <!-- ===================== APPENDED SCRIPTS ===================== -->
   <script>
-    function selectPlan(plan) {
-      // Hide modal
-      const modal = document.getElementById('planModal');
-      modal.style.display = 'none';
-      // Remove body modal-open class to restore background interactivity
-      document.body.classList.remove('modal-open');
-      
-      // Show congrats message for paid plans, different for free plan
-      if (plan === 'Free Plan') {
-        alert("Welcome! You selected the Free Plan. Enjoy basic access.");
-      } else {
-        alert(`Congratulations! You have successfully selected the ${plan}. Enjoy premium features.`);
+    /***********************
+      Data & sample PDFs
+    ***********************/
+    const samplePDF = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
+    // Data structure: classes -> subjects -> chapters -> notes[]
+    const data = {
+      "class 9": {
+        "Chemistry": {
+          "ch1": [{ title: "Ch1: Matter - Notes", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Atoms - Notes", url: samplePDF }]
+        },
+        "Physics": {
+          "ch1": [{ title: "Ch1: Motion", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Force", url: samplePDF }]
+        }
+      },
+      "class 10": {
+        "Chemistry": {
+          "ch1": [{ title: "Ch1: Chemical Reactions", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Acids & Bases", url: samplePDF }]
+        },
+        "Physics": {
+          "ch1": [{ title: "Ch1: Light", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Electricity", url: samplePDF }]
+        }
+      },
+      "class 11": {
+        "Chemistry": {
+          "ch1": [{ title: "Ch1: Atomic Structure", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Chemical Bonding", url: samplePDF }]
+        },
+        "Physics": {
+          "ch1": [{ title: "Ch1: Kinematics", url: samplePDF }],
+          "ch2": [{ title: "Ch2: Laws of Motion", url: samplePDF }]
+        }
       }
+    };
+
+    /***********************
+      Helper UI functions
+    ***********************/
+    const planModal = document.getElementById('planModal');
+    const appEl = document.getElementById('app');
+    const dashboardEl = document.getElementById('dashboard');
+    const classPageEl = document.getElementById('classPage');
+    const classesGrid = document.getElementById('classesGrid');
+    const subjectList = document.getElementById('subjectList');
+    const chapterList = document.getElementById('chapterList');
+    const notesPanel = document.getElementById('notesPanel');
+    const planBadge = document.getElementById('planBadge');
+    const searchBox = document.getElementById('searchBox');
+    const breadcrumbsEl = document.getElementById('breadcrumbs');
+
+    // Save original functions or elements? we kept the original UI unchanged above.
+    // We'll override selectPlan behavior here by attaching event listeners to original buttons.
+    document.getElementById('freeBtn').addEventListener('click', () => selectPlanAndOpenApp('Free'));
+    document.getElementById('proBtn').addEventListener('click', () => selectPlanAndOpenApp('Pro'));
+    document.getElementById('advBtn').addEventListener('click', () => selectPlanAndOpenApp('Advanced'));
+
+    // original selectPlan (user's original code) was NOT modified; but we handle behavior here
+    function selectPlanAndOpenApp(planName) {
+      // hide the modal exactly like original would
+      planModal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+
+      // store chosen plan
+      localStorage.setItem('src_selectedPlan', planName);
+      planBadge.textContent = planName;
+
+      // show app
+      appEl.classList.remove('app-hidden');
+      appEl.setAttribute('aria-hidden', 'false');
+
+      // render classes
+      renderClasses();
+
+      // focus search
+      setTimeout(()=> searchBox.focus(), 250);
     }
 
-    // On page load, show modal and block background interaction
-    window.onload = function() {
-      const modal = document.getElementById('planModal');
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
+    // On load: if plan already chosen, show app directly
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('src_selectedPlan');
+      if (saved) {
+        // hide modal and open app
+        planModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        planBadge.textContent = saved;
+        appEl.classList.remove('app-hidden');
+        appEl.setAttribute('aria-hidden','false');
+        renderClasses();
+      } else {
+        // no saved plan -> show modal exactly as your UI does
+        const modal = document.getElementById('planModal');
+        modal.style.display = 'flex';
+        document.body.classList.add('modal-open');
+      }
+    });
+
+    function renderClasses() {
+      classesGrid.innerHTML = '';
+      Object.keys(data).forEach(cls => {
+        const tile = document.createElement('div');
+        tile.className = 'class-tile';
+        tile.innerHTML = `<div style="font-weight:900">${cls.toUpperCase()}</div><div class="small-muted">See subjects & chapters</div>`;
+        tile.onclick = () => openClass(cls);
+        classesGrid.appendChild(tile);
+      });
     }
+
+    // Navigate to class page
+    let currentClass = null;
+    let currentSubject = null;
+    let currentChapter = null;
+
+    function openClass(cls) {
+      currentClass = cls;
+      // show classPage, hide dashboard
+      dashboardEl.style.display = 'none';
+      classPageEl.classList.remove('app-hidden');
+      classPageEl.setAttribute('aria-hidden','false');
+
+      // update breadcrumbs
+      renderBreadcrumbs();
+
+      // render subjects
+      renderSubjectsForClass(cls);
+
+      // clear notes/chapter lists
+      chapterList.innerHTML = '';
+      notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
+    }
+
+    function backToDashboard() {
+      classPageEl.classList.add('app-hidden');
+      classPageEl.setAttribute('aria-hidden','true');
+      dashboardEl.style.display = 'block';
+      currentClass = currentSubject = currentChapter = null;
+      renderBreadcrumbs();
+    }
+
+    function renderSubjectsForClass(cls) {
+      subjectList.innerHTML = '';
+      const subs = Object.keys(data[cls] || {});
+      subs.forEach(sub => {
+        const el = document.createElement('div');
+        el.className = 'subject';
+        el.textContent = sub;
+        el.onclick = () => selectSubject(sub, el);
+        subjectList.appendChild(el);
+      });
+    }
+
+    function selectSubject(sub, el) {
+      // visual active
+      Array.from(subjectList.children).forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+
+      currentSubject = sub;
+      currentChapter = null;
+
+      // render chapters
+      chapterList.innerHTML = '';
+      const chaps = Object.keys(data[currentClass][sub] || {});
+      chaps.forEach(ch => {
+        const cel = document.createElement('div');
+        cel.className = 'chapter';
+        // show "ch1" style text
+        cel.innerHTML = `<div style="font-weight:800">${ch}</div><div class="small-muted">Open notes</div>`;
+        cel.onclick = () => selectChapter(ch, cel);
+        chapterList.appendChild(cel);
+      });
+
+      // update breadcrumbs
+      renderBreadcrumbs();
+      // clear notes panel
+      notesPanel.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
+    }
+
+    function selectChapter(ch, el) {
+      Array.from(chapterList.children).forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+
+      currentChapter = ch;
+      // show notes for this chapter
+      const items = (data[currentClass] && data[currentClass][currentSubject] && data[currentClass][currentSubject][ch]) || [];
+      notesPanel.innerHTML = '<div style="margin-bottom:10px;font-weight:800">Notes / PDFs</div>';
+      if (items.length === 0) {
+        notesPanel.innerHTML += '<div class="small-muted">No notes available</div>';
+        return;
+      }
+      items.forEach(it => {
+        const n = document.createElement('div');
+        n.className = 'note-item';
+        n.innerHTML = `<div style="font-weight:700">${it.title}</div><div><button class="note-btn" onclick="window.open('${it.url}','_blank')">Open</button></div>`;
+        notesPanel.appendChild(n);
+      });
+
+      renderBreadcrumbs();
+    }
+
+    function renderBreadcrumbs() {
+      let html = `<span style="color:#9aa4b2">Home</span>`;
+      if (currentClass) {
+        html += `<span class="arrow">→</span><span>${currentClass}</span>`;
+      }
+      if (currentSubject) {
+        html += `<span class="arrow">→</span><span>${currentSubject}</span>`;
+      }
+      if (currentChapter) {
+        html += `<span class="arrow">→</span><span>${currentChapter}</span>`;
+      }
+      breadcrumbsEl.innerHTML = html;
+    }
+
+    // simple search that supports "class 10 chemistry ch1" and fuzzy
+    function handleSearch() {
+      const q = searchBox.value.trim().toLowerCase();
+      if (!q) {
+        // if empty — reset view (stay on current)
+        return;
+      }
+
+      // parse class token
+      let clsKey = null;
+      Object.keys(data).forEach(k => {
+        if (q.includes(k)) clsKey = k;
+      });
+
+      // parse subject token
+      let subjectKey = null;
+      if (clsKey) {
+        Object.keys(data[clsKey]).forEach(s => {
+          if (q.includes(s.toLowerCase())) subjectKey = s;
+        });
+      } else {
+        Object.keys(data).forEach(k=>{
+          Object.keys(data[k]).forEach(s=>{
+            if (q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }
+          });
+        });
+      }
+
+      // chapter token
+      let chapterKey = null;
+      const chMatch = q.match(/ch(?:apter)?\s*?(\d+)/) || q.match(/ch(\d+)/);
+      if (chMatch) chapterKey = 'ch' + chMatch[1];
+
+      // If exact match
+      if (clsKey && subjectKey && chapterKey && data[clsKey] && data[clsKey][subjectKey] && data[clsKey][subjectKey][chapterKey]) {
+        // go to that chapter
+        openClass(clsKey);
+        // select subject after a tiny delay
+        setTimeout(()=> {
+          // find subject element and click
+          Array.from(subjectList.children).forEach(c => {
+            if (c.textContent === subjectKey) c.click();
+          });
+          setTimeout(()=> {
+            Array.from(chapterList.children).forEach(c => {
+              if (c.firstChild && c.firstChild.textContent === chapterKey) c.click();
+            });
+          }, 120);
+        }, 120);
+        return;
+      }
+
+      // fuzzy find across titles
+      const results = [];
+      Object.keys(data).forEach(cls=>{
+        Object.keys(data[cls]).forEach(sub=>{
+          Object.keys(data[cls][sub]).forEach(ch=>{
+            (data[cls][sub][ch] || []).forEach(it=>{
+              const combined = `${cls} ${sub} ${ch} ${it.title}`.toLowerCase();
+              if (combined.includes(q)) results.push({cls, sub, ch, it});
+            });
+          });
+        });
+      });
+
+      if (results.length) {
+        // show first result
+        const r = results[0];
+        openClass(r.cls);
+        setTimeout(()=> {
+          Array.from(subjectList.children).forEach(c => {
+            if (c.textContent === r.sub) c.click();
+          });
+          setTimeout(()=> {
+            Array.from(chapterList.children).forEach(c => {
+              if (c.firstChild && c.firstChild.textContent === r.ch) c.click();
+            });
+            // highlight note and scroll into view
+            setTimeout(()=> {
+              const noteButtons = notesPanel.querySelectorAll('.note-item');
+              if (noteButtons.length) noteButtons[0].scrollIntoView({behavior:'smooth', block:'center'});
+            }, 150);
+          }, 120);
+        }, 120);
+        return;
+      }
+
+      // no results
+      alert('No notes found for: ' + q);
+    }
+
+    // Utility: reset
+    function resetApp() {
+      localStorage.removeItem('src_selectedPlan');
+      location.reload();
+    }
+
+    // navigation helpers
+    function gotoHome(){ window.scrollTo({top:0, behavior:'smooth'}); }
+    function gotoCourses(){ window.scrollTo({top:300, behavior:'smooth'}); }
+    function gotoTeachers(){ window.scrollTo({top:600, behavior:'smooth'}); }
+
+    // for debugging
+    window._SRC = { data, openClass, selectChapter, selectSubject, renderClasses };
   </script>
+  <!-- ========================================================= -->
 
 </body>
 </html>

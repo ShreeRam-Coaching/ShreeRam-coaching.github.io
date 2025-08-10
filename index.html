@@ -1,279 +1,131 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shree Ram Coaching — Portal</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shree Ram Coaching</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter, system-ui, Arial, sans-serif;background:#f5f9ff;color:#0b1220;line-height:1.4}
-    a{color:inherit}
-    .container{max-width:1100px;margin:20px auto;padding:0 16px}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#0f6eff,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
-    .brand h1{font-size:18px}
-    .nav-links{display:flex;gap:12px;align-items:center}
-    .nav-links a{padding:8px 10px;border-radius:8px;color:#374151;font-weight:600}
-    .search{display:flex;gap:8px;align-items:center}
-    .search input{padding:8px 10px;border-radius:8px;border:1px solid #e6eefc;width:240px}
-    .search button{background:#0f6eff;color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:center;margin-top:10px}
-    .hero-card{background:linear-gradient(180deg,#ffffff,#f8fbff);padding:22px;border-radius:12px;box-shadow:0 12px 30px rgba(20,30,60,0.06)}
-    .hero-card h2{font-size:26px;margin-bottom:8px}
-    .muted{color:#6b7280}
-    .panel{background:#fff;padding:16px;border-radius:10px;box-shadow:0 10px 26px rgba(10,20,40,0.04)}
-    .flow-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .back-btn{background:transparent;border:0;color:#0f172a;font-weight:700;cursor:pointer}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-    .card{background:#fff;padding:16px;border-radius:12px;cursor:pointer;box-shadow:0 8px 20px rgba(10,20,40,0.03);transition:transform .16s,box-shadow .16s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(10,20,40,0.06)}
-    .card h3{font-size:16px;margin-bottom:6px}
-    .small{font-size:13px;color:#6b7280}
-    #viewer{display:none;margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);display:flex;justify-content:space-between;align-items:center}
-    section{margin-top:22px}
-    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-    .btn-primary{background:#0f6eff;color:#fff}
-    .btn-outline{background:transparent;border:1px solid rgba(15,23,42,0.06)}
-
-    /* Popup Modal */
-    .modal {
-      display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-      width: 100%; height: 100%; background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fff; margin: 10% auto; padding: 20px;
-      border-radius: 12px; max-width: 400px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-      animation: fadeIn 0.3s ease;
-    }
-    .modal-close {
-      float: right; font-size: 22px; font-weight: bold; cursor: pointer; color: #999;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;} to {opacity: 1;}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fbff;
+      margin: 0;
+      padding: 0;
     }
 
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .search input{width:140px}
+    /* Fullscreen modal */
+    #accessModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
     }
-    @media (max-width:520px){
-      .logo{width:44px;height:44px;font-size:14px}
-      .brand h1{font-size:16px}
+
+    .modal-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .modal-box p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .modal-box button {
+      margin: 10px;
+      padding: 12px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: #0f6eff;
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #0f6eff;
+      border: 2px solid #0f6eff;
+    }
+
+    #mainContent {
+      display: none;
+      padding: 20px;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- NAV -->
-    <header class="nav">
-      <div class="brand">
-        <div class="logo">SR</div>
-        <div>
-          <h1>Shree Ram Coaching</h1>
-          <div class="muted" style="font-size:13px">Foundation • Boards • Test Prep</div>
-        </div>
-      </div>
-      <div class="nav-links">
-        <a href="#courses">Courses</a>
-        <a href="#teachers">Teachers</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div class="search">
-        <input id="searchBox" placeholder="Search (e.g. Class 10 Chemistry Ch1)" onkeydown="if(event.key==='Enter')searchNow()">
-        <button onclick="searchNow()">Search</button>
-      </div>
-    </header>
+<!-- Modal shown on page load -->
+<div id="accessModal">
+  <div class="modal-box">
+    <h2>Welcome to Shree Ram Coaching</h2>
+    <p>Get full access by subscribing or try the free version.</p>
+    <button class="btn-primary" onclick="grantAccess(true)">Subscribe Now</button>
+    <button class="btn-outline" onclick="grantAccess(false)">Continue for Free</button>
+  </div>
+</div>
 
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-card">
-        <h2>Structured Courses • High-quality Notes • Live Doubt Support</h2>
-        <p class="muted">Click a class on the right to explore subjects, chapters and notes. Subscribe to get full access to everything.</p>
-        <div style="margin-top:16px;display:flex;gap:12px">
-          <button class="btn btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Explore Courses</button>
-          <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Admissions</button>
-        </div>
-        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">500+</div><div class="muted">PDFs</div></div>
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">1200+</div><div class="muted">Students</div></div>
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">15</div><div class="muted">Years</div></div>
-        </div>
-      </div>
-
-      <aside class="panel">
-        <div class="flow-header">
-          <div><strong id="flowTitle">Select Class</strong></div>
-          <div><button class="back-btn" onclick="flowBack()">← Back</button></div>
-        </div>
-        <div id="flowArea" class="grid"></div>
-        <div id="viewer" style="display:none" class="panel" role="region" aria-live="polite">
-          <div id="viewerText"></div>
-          <div><a id="viewerOpen" href="#" target="_blank"><button class="btn btn-primary">Open</button></a></div>
-        </div>
-      </aside>
-    </div>
-
-    <!-- COURSES -->
-    <section id="courses" class="container">
-      <div class="section-title">
-        <h2>Our Courses</h2>
-        <button class="btn btn-primary" onclick="openSubscribeModal()">Subscribe Now</button>
-      </div>
-      <div class="muted" style="font-size:13px;margin-bottom:10px">Use promo code <strong>FREEPASS</strong> for demo access (₹0)</div>
-      <div class="grid" id="courseGrid"></div>
-    </section>
-
-    <!-- SUBSCRIPTION MODAL -->
-    <div id="subscribeModal" class="modal" onclick="closeModalOnClickOutside(event)">
-      <div class="modal-content">
-        <span class="modal-close" onclick="closeSubscribeModal()">&times;</span>
-        <h3>Subscribe</h3>
-        <div class="muted">Monthly Access</div>
-        <div class="price" id="priceDisplayModal">₹49 / month</div>
-
-        <div style="margin-top:10px;display:flex;gap:8px">
-          <input id="promoInputModal" placeholder="Have a promo code?" style="flex:1">
-          <button class="btn btn-outline" onclick="applyPromoModal()">Apply</button>
-        </div>
-
-        <div style="display:flex;gap:10px;margin-top:14px">
-          <button class="btn btn-primary" onclick="subscribeNow()">Subscribe</button>
-          <button class="btn btn-outline" onclick="simulateLogin()">Login (demo)</button>
-        </div>
-
-        <div id="promoStatusModal" class="muted" style="font-size:14px;margin-top:10px"></div>
-        <div class="muted" style="font-size:13px">Tip: Use code <strong>FREEPASS</strong> in demo to make it ₹0 (front-end only).</div>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <section id="contact" style="margin-top:40px;padding:20px 0;text-align:center;color:#6b7280">
-      <div class="muted">Contact us on WhatsApp at +91-12345-67890 or visit our center.</div>
-      <div style="margin-top:8px;font-size:13px">&copy; 2025 Shree Ram Coaching</div>
-    </section>
+<!-- Hidden until access granted -->
+<div id="mainContent">
+  <div class="section">
+    <h2>Dashboard</h2>
+    <p>Welcome! This is your learning dashboard.</p>
   </div>
 
-  <script>
-    const SUB = {
-      isSubscribed: false,
-      price: 49,
-      promoCodes: { FREEPASS: 0 }
-    };
+  <div class="section">
+    <h2>Courses</h2>
+    <ul>
+      <li>Class 9 Chemistry - Matter</li>
+      <li>Class 10 Physics - Motion</li>
+      <li>NEET - Organic Chemistry Basics</li>
+    </ul>
+  </div>
 
-    const courseData = {
-      'Class 10': {
-        'Science': {
-          'Chemical Reactions': 'https://example.com/ch10-chem-reactions.pdf',
-          'Acids and Bases': 'https://example.com/ch10-acids.pdf'
-        },
-        'Maths': {
-          'Polynomials': 'https://example.com/ch10-polynomials.pdf'
-        }
-      },
-      'Class 9': {
-        'Maths': {
-          'Number Systems': 'https://example.com/ch9-numbers.pdf'
-        }
-      }
-    };
+  <footer>
+    &copy; 2025 Shree Ram Coaching. All rights reserved.
+  </footer>
+</div>
 
-    let flowStack = [];
-
-    function renderFlow(level) {
-      const grid = document.getElementById('flowArea');
-      grid.innerHTML = '';
-      for(let key in level){
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `<h3>${key}</h3>`;
-        div.onclick = () => {
-          if(typeof level[key] === 'string'){
-            if(SUB.isSubscribed || SUB.price === 0){
-              document.getElementById('viewer').style.display = 'flex';
-              document.getElementById('viewerText').innerText = key;
-              document.getElementById('viewerOpen').href = level[key];
-            } else {
-              openSubscribeModal();
-            }
-          } else {
-            flowStack.push(level);
-            renderFlow(level[key]);
-            document.getElementById('flowTitle').innerText = key;
-          }
-        };
-        grid.appendChild(div);
-      }
-    }
-
-    function flowBack(){
-      const prev = flowStack.pop();
-      if(prev) renderFlow(prev);
-      else renderFlow(courseData);
-      document.getElementById('viewer').style.display = 'none';
-      document.getElementById('flowTitle').innerText = 'Select Class';
-    }
-
-    function applyPromoModal(){
-      const code = (document.getElementById('promoInputModal').value || '').trim().toUpperCase();
-      if(!code){ alert('Enter a promo code'); return; }
-      if(SUB.promoCodes.hasOwnProperty(code)){
-        SUB.price = SUB.promoCodes[code];
-        document.getElementById('promoStatusModal').innerText = `Promo applied: ${code} — price is now ₹${SUB.price}/month (demo)`;
-      } else {
-        alert('Invalid promo code.');
-      }
-      document.getElementById('priceDisplayModal').innerText = `₹${SUB.price} / month`;
-    }
-
-    function subscribeNow(){
-      alert("This is just a demo. In production, you'd integrate payment here.");
-      SUB.isSubscribed = true;
-      closeSubscribeModal();
-    }
-
-    function simulateLogin(){
-      SUB.isSubscribed = true;
-      alert("You're logged in (demo)");
-      closeSubscribeModal();
-    }
-
-    function openSubscribeModal(){
-      document.getElementById('subscribeModal').style.display = 'block';
-      document.getElementById('priceDisplayModal').innerText = `₹${SUB.price} / month`;
-      document.getElementById('promoStatusModal').innerText = '';
-      document.getElementById('promoInputModal').value = '';
-    }
-
-    function closeSubscribeModal(){
-      document.getElementById('subscribeModal').style.display = 'none';
-    }
-
-    function closeModalOnClickOutside(e){
-      if(e.target.id === 'subscribeModal') closeSubscribeModal();
-    }
-
-    function searchNow(){
-      const q = document.getElementById('searchBox').value.toLowerCase();
-      for(let c in courseData){
-        for(let s in courseData[c]){
-          for(let ch in courseData[c][s]){
-            if(ch.toLowerCase().includes(q)){
-              alert(`Match found in ${c} > ${s} > ${ch}`);
-              return;
-            }
-          }
-        }
-      }
-      alert("No match found.");
-    }
-
-    // INIT
-    renderFlow(courseData);
-  </script>
+<script>
+  function grantAccess(isSubscribed) {
+    // You can do more with this later (like saving subscription state)
+    document.getElementById('accessModal').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    alert(isSubscribed ? 'Subscribed! Enjoy full access.' : 'Free version activated.');
+  }
+</script>
 
 </body>
 </html>
+

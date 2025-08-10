@@ -1,415 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shree Ram Coaching — Portal</title>
-
-  <style>
-    /* ====== Reset & basics ====== */
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Inter, system-ui, Arial, sans-serif;background:#f5f9ff;color:#0b1220;line-height:1.4}
-    a{color:inherit}
-    .container{max-width:1100px;margin:20px auto;padding:0 16px}
-
-    /* ===== Navbar ===== */
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#0f6eff,#60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
-    .brand h1{font-size:18px}
-    .nav-links{display:flex;gap:12px;align-items:center}
-    .nav-links a{padding:8px 10px;border-radius:8px;color:#374151;font-weight:600}
-    .search{display:flex;gap:8px;align-items:center}
-    .search input{padding:8px 10px;border-radius:8px;border:1px solid #e6eefc;width:240px}
-    .search button{background:#0f6eff;color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
-
-    /* ===== Hero ===== */
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:center;margin-top:10px}
-    .hero-card{background:linear-gradient(180deg,#ffffff,#f8fbff);padding:22px;border-radius:12px;box-shadow:0 12px 30px rgba(20,30,60,0.06)}
-    .hero-card h2{font-size:26px;margin-bottom:8px}
-    .muted{color:#6b7280}
-
-    /* Quick flow panel */
-    .panel{background:#fff;padding:16px;border-radius:10px;box-shadow:0 10px 26px rgba(10,20,40,0.04)}
-    .flow-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .back-btn{background:transparent;border:0;color:#0f172a;font-weight:700;cursor:pointer}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-    .card{background:#fff;padding:16px;border-radius:12px;cursor:pointer;box-shadow:0 8px 20px rgba(10,20,40,0.03);transition:transform .16s,box-shadow .16s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(10,20,40,0.06)}
-    .card h3{font-size:16px;margin-bottom:6px}
-    .small{font-size:13px;color:var(--muted)}
-
-    /* Viewer */
-    #viewer{display:none;margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);display:flex;justify-content:space-between;align-items:center}
-
-    /* Sections below hero */
-    section{margin-top:22px}
-    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-    .btn-primary{background:#0f6eff;color:#fff}
-    .btn-outline{background:transparent;border:1px solid rgba(15,23,42,0.06)}
-
-    /* Subscription box */
-    .subscribe-box{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:12px;background:linear-gradient(180deg,#fff,#f6fbff);box-shadow:0 10px 30px rgba(10,20,40,0.04)}
-    .price{font-size:22px;font-weight:800}
-    .promo-row{display:flex;gap:8px}
-    .promo-row input{flex:1;padding:8px;border-radius:8px;border:1px solid #e6eefc}
-
-    /* Responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .search input{width:140px}
-    }
-
-    @media (max-width:520px){
-      .logo{width:44px;height:44px;font-size:14px}
-      .brand h1{font-size:16px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Shree Ram Coching</title>
 </head>
 <body>
 
-  <div class="container">
-    <!-- NAV -->
-    <header class="nav">
-      <div class="brand">
-        <div class="logo">SR</div>
+    <!-- Header -->
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 2px solid black;">
         <div>
-          <h1>Shree Ram Coaching</h1>
-          <div class="muted" style="font-size:13px">Foundation • Boards • Test Prep</div>
+            <img src="logo.png" alt="Logo" style="height: 50px;">
         </div>
-      </div>
-
-      <div class="nav-links">
-        <a href="#courses" onclick="scrollTo('courses')">Courses</a>
-        <a href="#teachers" onclick="scrollTo('teachers')">Teachers</a>
-        <a href="#contact" onclick="scrollTo('contact')">Contact</a>
-      </div>
-
-      <div class="search">
-        <input id="searchBox" placeholder="Search (e.g. Class 10 Chemistry Ch1)" onkeydown="if(event.key==='Enter')searchNow()">
-        <button onclick="searchNow()">Search</button>
-      </div>
+        <nav>
+            <a href="#">About</a> |
+            <a href="#">Contact Teachers</a> |
+            <a href="#">Plan</a>
+        </nav>
+        <div>
+            <strong>Shree Ram Coching</strong><br>
+            <em>(name of the coching)</em>
+        </div>
+        <div>
+            <input type="text" placeholder="Search (e.g. 9th chemistry ch1)" />
+        </div>
+        <div>
+            <p>Their ID and Logo</p>
+        </div>
     </header>
 
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-card">
-        <h2>Structured Courses • High-quality Notes • Live Doubt Support</h2>
-        <p class="muted">Click a class on the right to explore subjects, chapters and notes. Subscribe to get full access to everything.</p>
-
-        <div style="margin-top:16px;display:flex;gap:12px">
-          <button class="btn btn-primary" onclick="scrollTo('courses')">Explore Courses</button>
-          <button class="btn btn-outline" onclick="scrollTo('contact')">Contact Admissions</button>
-        </div>
-
-        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">500+</div><div class="muted">PDFs</div></div>
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">1200+</div><div class="muted">Students</div></div>
-          <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(10,20,40,0.04)"><div style="font-weight:800">15</div><div class="muted">Years</div></div>
-        </div>
-      </div>
-
-      <!-- Quick panel: classes -> subjects -> chapters -->
-      <aside class="panel">
-        <div class="flow-header">
-          <div><strong id="flowTitle">Select Class</strong></div>
-          <div><button class="back-btn" onclick="flowBack()">← Back</button></div>
-        </div>
-
-        <div id="flowArea" class="grid"></div>
-
-        <div id="viewer" style="display:none" class="panel" role="region" aria-live="polite">
-          <div id="viewerText"></div>
-          <div><a id="viewerOpen" href="#" target="_blank"><button class="btn btn-primary">Open</button></a></div>
-        </div>
-      </aside>
-    </div>
-
-    <!-- COURSES SECTION -->
-    <section id="courses" class="container">
-      <div class="section-title">
-        <h3>Courses</h3>
-        <div class="muted">Choose your class and start learning</div>
-      </div>
-
-      <div id="coursesGrid" class="grid"></div>
+    <!-- Banner Section -->
+    <section style="border: 2px solid black; height: 200px; margin: 10px;">
+        <h1 style="text-align: center;">Banner</h1>
     </section>
 
-    <!-- SUBSCRIPTION SECTION -->
-    <section class="container" style="margin-top:18px">
-      <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
-        <div style="flex:1;min-width:260px">
-          <h3>Subscribe</h3>
-          <div class="subscribe-box">
-            <div>
-              <div class="muted">Monthly Access</div>
-              <div class="price" id="priceDisplay">₹49 / month</div>
-            </div>
-
-            <div class="promo-row">
-              <input id="promoInput" placeholder="Have a promo code?">
-              <button class="btn btn-outline" onclick="applyPromo()">Apply</button>
-            </div>
-
-            <div style="display:flex;gap:10px">
-              <button class="btn btn-primary" onclick="subscribeNow()">Subscribe</button>
-              <button class="btn btn-outline" onclick="simulateLogin()">Login (demo)</button>
-            </div>
-
-            <div id="promoStatus" class="muted" style="font-size:14px"></div>
-            <div class="muted" style="font-size:13px">Tip: Use code <strong>FREEPASS</strong> in demo to make it ₹0 (front-end only).</div>
-          </div>
+    <!-- Class Selection -->
+    <section style="margin: 20px;">
+        <div>
+            <p><strong>Class 10th</strong></p>
+            <p><strong>Class 11th</strong></p>
         </div>
 
-        <div style="flex:1;min-width:280px">
-          <h3>Why subscribe?</h3>
-          <div class="panel">
-            <ul style="padding-left:18px">
-              <li>Full access to class notes, sample tests & video links</li>
-              <li>Download PDFs for offline study</li>
-              <li>Priority doubt resolution (demo)</li>
-            </ul>
-          </div>
+        <!-- Subject Selection -->
+        <div>
+            <p>→ Chemistry</p>
+            <p>→ Physics</p>
         </div>
-      </div>
+
+        <!-- Chapter and Notes -->
+        <div>
+            <p>↳ ch1</p>
+            <p>↳ ch2</p>
+            <p>→ Notes</p>
+        </div>
+
+        <!-- PDF Redirect -->
+        <div style="border: 1px solid black; width: fit-content; padding: 5px; margin-top: 10px;">
+            Redirected to PDF pages
+        </div>
     </section>
 
-    <!-- TEACHERS -->
-    <section id="teachers" class="container">
-      <h3>Teachers</h3>
-      <div class="grid" style="margin-top:12px">
-        <div class="card"><h3>Dr. A Sharma</h3><div class="muted">Chemistry — 10 yrs</div></div>
-        <div class="card"><h3>Ms. N Desai</h3><div class="muted">Math — 8 yrs</div></div>
-        <div class="card"><h3>Mr. R Kumar</h3><div class="muted">Physics — 12 yrs</div></div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="container">
-      <h3>Contact</h3>
-      <div class="panel" style="margin-top:12px">
-        <p class="muted">Phone: +91 98765 43210 • Email: admissions@shreeram.edu</p>
-        <p class="muted">Address: Your coaching address here.</p>
-      </div>
-    </section>
-
-    <footer style="margin:30px 0;text-align:center;color:#6b7280">
-      © Shree Ram Coaching — Demo site. Real payments & login must be implemented on your hosting / Shopify.
-    </footer>
-  </div>
-
-  <script>
-    /******************************************
-     * DATA: courses -> subjects -> chapters -> file
-     * Edit paths to match your notes folder
-     ******************************************/
-    const DATA = {
-      "Class 9": {
-        "Chemistry": [
-          {title: "Ch 1 - Matter", file: "notes/class9/chemistry/ch1.pdf"},
-          {title: "Ch 2 - Atoms", file: "notes/class9/chemistry/ch2.pdf"}
-        ],
-        "Math": [
-          {title: "Ch 1 - Number System", file: "notes/class9/math/ch1.pdf"}
-        ]
-      },
-      "Class 10": {
-        "Chemistry": [
-          {title: "Ch 1 - Chemical Reactions", file: "notes/class10/chemistry/ch1.pdf"},
-          {title: "Ch 2 - Acids & Bases", file: "notes/class10/chemistry/ch2.pdf"}
-        ],
-        "Physics": [
-          {title: "Ch 1 - Motion", file: "notes/class10/physics/ch1.pdf"}
-        ]
-      },
-      "NEET Foundation": {
-        "Physics": [
-          {title: "Kinematics", file: "notes/neet/physics/kinematics.pdf"}
-        ],
-        "Chemistry": [
-          {title: "Organic Basics", file: "notes/neet/chem/organic.pdf"}
-        ]
-      }
-    };
-
-    // Subscription demo state
-    const SUB = {
-      price: 49,
-      promoCodes: { "FREEPASS": 0 }, // correct code: FREEPASS -> price 0 (demo)
-      subscribed: false
-    };
-
-    // Flow navigation stack
-    const flowStack = [];
-
-    // Initial render
-    function init(){
-      renderQuickPanel();
-      renderCoursesGrid();
-      // restore demo subscription state if saved
-      const saved = localStorage.getItem('sr_subscription_demo');
-      if(saved === '1'){ SUB.subscribed = true; document.getElementById('promoStatus').innerText = 'Demo: You are subscribed (saved)'; }
-      updatePriceDisplay();
-    }
-    window.addEventListener('load', init);
-
-    /* ---------- UI renderers ---------- */
-    function renderQuickPanel(){
-      const area = document.getElementById('flowArea');
-      area.innerHTML = '';
-      Object.keys(DATA).forEach(course => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<h3>${course}</h3><div class="small">${Object.keys(DATA[course]).length} subjects</div>`;
-        card.onclick = ()=>{ flowStack.length=0; flowStack.push({level:'courses'}); showSubjects(course); }
-        area.appendChild(card);
-      });
-    }
-
-    function renderCoursesGrid(){
-      const grid = document.getElementById('coursesGrid');
-      grid.innerHTML = '';
-      Object.keys(DATA).forEach(course => {
-        const node = document.createElement('div');
-        node.className = 'card';
-        node.innerHTML = `<h3>${course}</h3><div class="small">${Object.keys(DATA[course]).length} subjects</div>`;
-        node.onclick = ()=>{ flowStack.length=0; flowStack.push({level:'courses'}); showSubjects(course); }
-        grid.appendChild(node);
-      });
-    }
-
-    function showSubjects(course){
-      document.getElementById('flowTitle').innerText = `${course} — Subjects`;
-      const area = document.getElementById('flowArea');
-      area.innerHTML = '';
-      const subjects = Object.keys(DATA[course] || {});
-      subjects.forEach(sub => {
-        const c = document.createElement('div');
-        c.className = 'card';
-        c.innerHTML = `<h3>${sub}</h3><div class="small">${(DATA[course][sub]||[]).length} chapters</div>`;
-        c.onclick = ()=>{ flowStack.push({level:'subjects', course}); showChapters(course, sub); }
-        area.appendChild(c);
-      });
-      hideViewer();
-    }
-
-    function showChapters(course, subject){
-      document.getElementById('flowTitle').innerText = `${course} • ${subject} — Chapters`;
-      const area = document.getElementById('flowArea');
-      area.innerHTML = '';
-      const chapters = (DATA[course] && DATA[course][subject]) || [];
-      chapters.forEach((chap, idx) => {
-        const item = document.createElement('div');
-        item.className = 'card';
-        item.innerHTML = `<h3>${idx+1}. ${chap.title}</h3><div class="small">Click to open notes</div>`;
-        item.onclick = ()=>{ flowStack.push({level:'chapters', course, subject}); openNote(chap); }
-        area.appendChild(item);
-      });
-      hideViewer();
-    }
-
-    function openNote(chap){
-      // If content locked and user not subscribed, show message and trial path
-      if(!SUB.subscribed && SUB.price > 0){
-        if(!confirm('This content is for subscribers. Subscribe for ₹' + SUB.price + ' / month. Want to continue to subscribe/demo?')){
-          return;
-        }
-      }
-      // Show viewer
-      const viewer = document.getElementById('viewer');
-      const text = document.getElementById('viewerText');
-      const link = document.getElementById('viewerOpen');
-      text.innerHTML = `<strong>${chap.title}</strong> — file: <code>${chap.file}</code>`;
-      link.href = chap.file;
-      viewer.style.display = 'flex';
-      // In demo, won't auto-open; user can click Open
-    }
-
-    function hideViewer(){ document.getElementById('viewer').style.display = 'none'; }
-
-    function flowBack(){
-      if(flowStack.length <= 1){
-        flowStack.length = 0;
-        document.getElementById('flowTitle').innerText = 'Select Class';
-        renderQuickPanel();
-        renderCoursesGrid();
-        hideViewer();
-        return;
-      }
-      flowStack.pop();
-      const top = flowStack[flowStack.length-1];
-      if(!top || top.level === 'courses'){ document.getElementById('flowTitle').innerText='Select Class'; renderQuickPanel(); renderCoursesGrid(); hideViewer(); }
-      else if(top.level === 'subjects'){ showSubjects(top.course); }
-      else if(top.level === 'chapters'){ showChapters(top.course, top.subject); }
-    }
-
-    /* ---------- Search ---------- */
-    function searchNow(){
-      const q = (document.getElementById('searchBox').value || '').trim().toLowerCase();
-      if(!q){ alert('Type something like: Class 10 Chemistry Ch1'); return; }
-      let found = null;
-      outer: for(const course of Object.keys(DATA)){
-        for(const subject of Object.keys(DATA[course])){
-          for(const chap of DATA[course][subject]){
-            const hay = `${course} ${subject} ${chap.title} ${chap.file}`.toLowerCase();
-            if(hay.includes(q)){ found = {course, subject, chap}; break outer; }
-          }
-        }
-      }
-      if(found){
-        flowStack.length = 0; flowStack.push({level:'courses'});
-        showSubjects(found.course);
-        setTimeout(()=>{ showChapters(found.course, found.subject); setTimeout(()=>{ openNote(found.chap); },250); },250);
-      } else {
-        alert('No matching notes found.');
-      }
-    }
-
-    /* ---------- Subscription & Promo (DEMO only) ---------- */
-    function applyPromo(){
-      const code = (document.getElementById('promoInput').value || '').trim().toUpperCase();
-      if(!code){ alert('Enter a promo code'); return; }
-      if(SUB.promoCodes.hasOwnProperty(code)){
-        SUB.price = SUB.promoCodes[code];
-        document.getElementById('promoStatus').innerText = `Promo applied: ${code} — price is now ₹${SUB.price}/month (demo)`;
-      } else {
-        alert('Invalid promo code.');
-      }
-      updatePriceDisplay();
-    }
-
-    function updatePriceDisplay(){
-      const el = document.getElementById('priceDisplay');
-      el.innerText = `₹${SUB.price} / month`;
-    }
-
-    function subscribeNow(){
-      if(SUB.price === 0){
-        // Simulate free subscription flow
-        SUB.subscribed = true;
-        localStorage.setItem('sr_subscription_demo','1');
-        alert('Subscribed (demo) — you have free access. This is a frontend-only simulation.');
-        document.getElementById('promoStatus').innerText = 'Demo: You are subscribed (free)';
-      } else {
-        // In real site, redirect to payment gateway / Shopify checkout
-        alert('Redirect to payment gateway / Shopify checkout (not implemented in this demo). Price: ₹' + SUB.price + '/month');
-      }
-    }
-
-    function simulateLogin(){
-      SUB.subscribed = true;
-      localStorage.setItem('sr_subscription_demo','1');
-      document.getElementById('promoStatus').innerText = 'Demo: You are logged in as subscriber (simulated).';
-      alert('Logged in (demo). You now have access to subscriber content in this demo.');
-    }
-
-    /* ---------- Helpers ---------- */
-    function scrollTo(id){
-      const el = document.getElementById(id);
-      if(el) el.scrollIntoView({behavior:'smooth'});
-    }
-  </script>
 </body>
 </html>
+

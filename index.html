@@ -3,129 +3,183 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shree Ram Coaching</title>
+  <title>Shree Ram Coaching - Plan Selection</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fbff;
+    body, html {
       margin: 0;
       padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
     }
 
-    /* Fullscreen modal */
-    #accessModal {
+    /* Background Image */
+    .background {
+      background-image: url('https://images.unsplash.com/photo-1601597111140-6dc5e03dba3f'); /* Replace with your image */
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px);
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      z-index: 1;
+    }
+
+    /* Overlay with transparency */
+    .overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 2;
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
     }
 
+    /* Plan Selection Box */
     .modal-box {
-      background: white;
+      background-color: white;
       padding: 30px;
       border-radius: 12px;
-      max-width: 400px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      z-index: 3;
       width: 90%;
-      text-align: center;
+      max-width: 900px;
     }
 
     .modal-box h2 {
-      margin-bottom: 10px;
-    }
-
-    .modal-box p {
-      color: #555;
+      text-align: center;
       margin-bottom: 20px;
     }
 
-    .modal-box button {
-      margin: 10px;
-      padding: 12px 20px;
-      font-weight: bold;
-      border: none;
+    .plans {
+      display: flex;
+      gap: 20px;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .plan {
+      flex: 1;
+      min-width: 250px;
+      background: #f8f9fc;
+      border: 2px solid #ccc;
       border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .plan h3 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .feature {
+      text-align: left;
+      padding: 5px 0;
+      color: #333;
+    }
+
+    .plan button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: #0f6eff;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
       cursor: pointer;
     }
 
-    .btn-primary {
-      background-color: #0f6eff;
-      color: white;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: #0f6eff;
-      border: 2px solid #0f6eff;
-    }
-
+    /* Main site content hidden at first */
     #mainContent {
       display: none;
-      padding: 20px;
+      position: relative;
+      z-index: 0;
+      padding: 30px;
     }
 
     .section {
       background: white;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       margin-bottom: 20px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 13px;
-      color: #888;
-      margin-top: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
-<!-- Modal shown on page load -->
-<div id="accessModal">
+<div class="background"></div>
+
+<!-- Popup Plan Selection -->
+<div class="overlay" id="planOverlay">
   <div class="modal-box">
-    <h2>Welcome to Shree Ram Coaching</h2>
-    <p>Get full access by subscribing or try the free version.</p>
-    <button class="btn-primary" onclick="grantAccess(true)">Subscribe Now</button>
-    <button class="btn-outline" onclick="grantAccess(false)">Continue for Free</button>
+    <h2>Select a Plan to Continue</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Free</h3>
+        <div class="price">₹0/month</div>
+        <div class="feature">✔ Access to 1 Course</div>
+        <div class="feature">✔ Basic Quiz</div>
+        <div class="feature">✖ No Downloadable Notes</div>
+        <div class="feature">✖ No Personal Support</div>
+        <button onclick="selectPlan('Free')">Continue</button>
+      </div>
+
+      <div class="plan">
+        <h3>Pro</h3>
+        <div class="price">₹299/month</div>
+        <div class="feature">✔ Access to All Courses</div>
+        <div class="feature">✔ Quizzes & Assignments</div>
+        <div class="feature">✔ Downloadable Notes</div>
+        <div class="feature">✖ No 1-on-1 Support</div>
+        <button onclick="selectPlan('Pro')">Continue</button>
+      </div>
+
+      <div class="plan">
+        <h3>Advanced</h3>
+        <div class="price">₹499/month</div>
+        <div class="feature">✔ Everything in Pro</div>
+        <div class="feature">✔ 1-on-1 Doubt Sessions</div>
+        <div class="feature">✔ NEET/JEE Test Series</div>
+        <div class="feature">✔ Early Access to Notes</div>
+        <button onclick="selectPlan('Advanced')">Continue</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Hidden until access granted -->
+<!-- Main Site (Hidden at First) -->
 <div id="mainContent">
   <div class="section">
-    <h2>Dashboard</h2>
-    <p>Welcome! This is your learning dashboard.</p>
+    <h2>Welcome to Shree Ram Coaching</h2>
+    <p>Your personalized learning dashboard will appear here based on your selected plan.</p>
   </div>
 
   <div class="section">
-    <h2>Courses</h2>
+    <h2>Courses Available</h2>
     <ul>
-      <li>Class 9 Chemistry - Matter</li>
-      <li>Class 10 Physics - Motion</li>
-      <li>NEET - Organic Chemistry Basics</li>
+      <li>Class 9 - Science & Math</li>
+      <li>Class 10 - Full Syllabus</li>
+      <li>NEET / JEE Crash Course</li>
     </ul>
   </div>
-
-  <footer>
-    &copy; 2025 Shree Ram Coaching. All rights reserved.
-  </footer>
 </div>
 
 <script>
-  function grantAccess(isSubscribed) {
-    // You can do more with this later (like saving subscription state)
-    document.getElementById('accessModal').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    alert(isSubscribed ? 'Subscribed! Enjoy full access.' : 'Free version activated.');
+  function selectPlan(planName) {
+    alert(`You selected: ${planName}`);
+    document.getElementById("planOverlay").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
   }
 </script>
 
 </body>
 </html>
-

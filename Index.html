@@ -1,191 +1,299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Plan Selection</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; font-family: Arial, sans-serif;
-    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
-    background-size: cover;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shree Ram Coaching — Portal</title>
+  <style>
+    /* Reset and basics */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: #f5f9ff;
+      color: #0b1220;
+      line-height: 1.4;
+    }
+    a { color: inherit; }
 
-  #planOverlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+    /* Main site container */
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 16px;
+      filter: none;
+      transition: filter 0.3s ease;
+    }
+    /* When modal is open, dim the background */
+    body.modal-open .container {
+      filter: blur(3px) brightness(0.7);
+      pointer-events: none;
+      user-select: none;
+    }
 
-  .plan-container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 900px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.3);
-    display: flex;
-    justify-content: space-around;
-  }
+    /* Navbar styles */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0f6eff, #60a5fa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    .brand h1 {
+      font-size: 18px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .nav-links a {
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #374151;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
 
-  .plan {
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 30%;
-    text-align: center;
-    background: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
+    /* Modal background */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
 
-  .plan.pro, .plan.advanced {
-    border-color: #007bff;
-  }
+    /* Modal container */
+    .modal {
+      background: white;
+      border-radius: 15px;
+      padding: 24px 32px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-  .plan h2 {
-    margin-bottom: 15px;
-  }
+    /* Each plan card */
+    .plan {
+      flex: 1 1 200px;
+      border-radius: 12px;
+      padding: 20px 16px;
+      box-shadow: 0 8px 30px rgba(10,20,40,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .plan:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 50px rgba(10,20,40,0.15);
+    }
 
-  .price {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
+    /* Plan titles */
+    .plan h2 {
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
 
-  .button-free {
-    background: none;
-    border: none;
-    color: #007bff;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-  }
-  .button-subscribe {
-    background: #007bff;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-    transition: background-color 0.3s ease;
-  }
-  .button-subscribe:hover {
-    background-color: #0056b3;
-  }
+    /* Plan price */
+    .price {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #0f6eff;
+    }
 
-  /* Modal confirmation */
-  #confirmationModal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-    z-index: 1100;
-    display: none;
-    max-width: 400px;
-    text-align: center;
-  }
-  #confirmationModal h3 {
-    margin-bottom: 20px;
-    color: #007bff;
-  }
-  #confirmationModal button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  #confirmationModal button:hover {
-    background: #0056b3;
-  }
+    /* Features list */
+    ul.features {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 24px;
+      color: #444;
+      font-size: 15px;
+      text-align: left;
+    }
+    ul.features li {
+      margin-bottom: 10px;
+      padding-left: 18px;
+      position: relative;
+    }
+    ul.features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #0f6eff;
+      font-weight: bold;
+    }
 
-  /* Hide main content initially */
-  #mainContent {
-    display: none;
-    padding: 30px;
-    background: white;
-    max-width: 1000px;
-    margin: 30px auto;
-    border-radius: 8px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.1);
-  }
-</style>
+    /* Buttons */
+    button.subscribe-btn {
+      background: #0f6eff;
+      color: white;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    button.subscribe-btn:hover {
+      background: #0956cc;
+    }
+
+    /* Free plan button style */
+    button.free-btn {
+      background: transparent;
+      color: #0f6eff;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 2px solid #0f6eff;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    button.free-btn:hover {
+      background: #0f6eff;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .modal {
+        flex-direction: column;
+      }
+      .plan {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div id="planOverlay">
-  <div class="plan-container">
-    <div class="plan free">
-      <h2>Free Plan</h2>
-      <div class="price">Free</div>
-      <button class="button-free" onclick="selectPlan('Free')">Continue with Free Plan</button>
-    </div>
-    <div class="plan pro">
-      <h2>Pro Plan</h2>
-      <div class="price">$49 / month</div>
-      <button class="button-subscribe" onclick="selectPlan('Pro')">Subscribe</button>
-    </div>
-    <div class="plan advanced">
-      <h2>Advanced Plan</h2>
-      <div class="price">$99 / month</div>
-      <button class="button-subscribe" onclick="selectPlan('Advanced')">Subscribe</button>
+  <!-- Main coaching site container -->
+  <div class="container">
+    <header class="nav">
+      <div class="brand">
+        <div class="logo">SR</div>
+        <div>
+          <h1>Shree Ram Coaching</h1>
+          <div class="muted" style="font-size:13px">Foundation • Boards • Test Prep</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#courses">Courses</a>
+        <a href="#teachers">Teachers</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="courses" style="margin-top: 30px;">
+        <h2>Courses Section (Content here)</h2>
+        <p>This is the main site content. The user will see this after selecting a plan.</p>
+      </section>
+      <!-- Add your full site content here -->
+    </main>
+
+    <footer style="margin: 30px 0; text-align: center; color: #6b7280;">
+      © Shree Ram Coaching — Demo site.
+    </footer>
+  </div>
+
+  <!-- Modal popup overlay -->
+  <div id="planModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="plan">
+        <h2>Free Plan</h2>
+        <div class="price">₹0</div>
+        <ul class="features">
+          <li>Basic access to notes</li>
+          <li>Limited PDFs</li>
+          <li>Community support</li>
+        </ul>
+        <button class="free-btn" onclick="selectPlan('Free Plan')">Continue with Free Plan</button>
+      </div>
+      <div class="plan">
+        <h2>Pro Plan</h2>
+        <div class="price">₹49 / month</div>
+        <ul class="features">
+          <li>Full access to notes & PDFs</li>
+          <li>Priority doubt support</li>
+          <li>Downloadable content</li>
+        </ul>
+        <button class="subscribe-btn" onclick="selectPlan('Pro Plan')">Subscribe</button>
+      </div>
+      <div class="plan">
+        <h2>Advanced Plan</h2>
+        <div class="price">₹99 / month</div>
+        <ul class="features">
+          <li>All Pro features</li>
+          <li>One-on-one mentoring</li>
+          <li>Exclusive video content</li>
+        </ul>
+        <button class="subscribe-btn" onclick="selectPlan('Advanced Plan')">Subscribe</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Confirmation modal -->
-<div id="confirmationModal">
-  <h3 id="confirmationMessage"></h3>
-  <button onclick="closeConfirmation()">Awesome! Let me in!</button>
-</div>
-
-<!-- Main content (hidden initially) -->
-<div id="mainContent">
-  <h1>Welcome to Your Dashboard!</h1>
-  <p>This is where your site content will appear after selecting a plan.</p>
-</div>
-
-<script>
-  function selectPlan(planName) {
-    let message = "";
-    switch(planName) {
-      case "Free":
-        message = "You're all set! Explore the basics and start learning for free!";
-        break;
-      case "Pro":
-        message = "Congratulations! You've unlocked full access to all courses and notes!";
-        break;
-      case "Advanced":
-        message = "Awesome! You've chosen the Advanced plan – Premium access, personal support, and more!";
-        break;
-      default:
-        message = `You selected: ${planName}`;
+  <script>
+    function selectPlan(plan) {
+      // Hide modal
+      const modal = document.getElementById('planModal');
+      modal.style.display = 'none';
+      // Remove body modal-open class to restore background interactivity
+      document.body.classList.remove('modal-open');
+      
+      // Show congrats message for paid plans, different for free plan
+      if (plan === 'Free Plan') {
+        alert("Welcome! You selected the Free Plan. Enjoy basic access.");
+      } else {
+        alert(`Congratulations! You have successfully selected the ${plan}. Enjoy premium features.`);
+      }
     }
 
-    document.getElementById("confirmationMessage").textContent = message;
-    document.getElementById("confirmationModal").style.display = "block";
-    document.getElementById("planOverlay").style.display = "none";
-  }
-
-  function closeConfirmation() {
-    document.getElementById("confirmationModal").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-  }
-</script>
+    // On page load, show modal and block background interaction
+    window.onload = function() {
+      const modal = document.getElementById('planModal');
+      modal.style.display = 'flex';
+      document.body.classList.add('modal-open');
+    }
+  </script>
 
 </body>
 </html>

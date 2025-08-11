@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Shree Ram Coaching — Portal</title>
 
-  <!-- =======================
-       (BEGIN) YOUR ORIGINAL
-       PLAN UI — KEPT 100% AS-IS
-       ======================= -->
   <style>
-    /* Reset and basics */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Inter, system-ui, Arial, sans-serif;
@@ -20,7 +15,6 @@
     }
     a { color: inherit; }
 
-    /* Main site container */
     .container {
       max-width: 1100px;
       margin: 20px auto;
@@ -28,14 +22,12 @@
       filter: none;
       transition: filter 0.3s ease;
     }
-    /* When modal is open, dim the background */
     body.modal-open .container {
       filter: blur(3px) brightness(0.7);
       pointer-events: none;
       user-select: none;
     }
 
-    /* Navbar styles */
     .nav {
       display: flex;
       align-items: center;
@@ -64,9 +56,7 @@
       font-weight: 800;
       font-size: 24px;
     }
-    .brand h1 {
-      font-size: 18px;
-    }
+    .brand h1 { font-size: 18px; }
     .nav-links {
       display: flex;
       gap: 12px;
@@ -81,7 +71,6 @@
       text-decoration: none;
     }
 
-    /* Modal background */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -91,8 +80,6 @@
       align-items: center;
       z-index: 999;
     }
-
-    /* Modal container */
     .modal {
       background: white;
       border-radius: 15px;
@@ -105,8 +92,6 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-
-    /* Each plan card */
     .plan {
       flex: 1 1 200px;
       border-radius: 12px;
@@ -123,23 +108,17 @@
       transform: translateY(-8px);
       box-shadow: 0 18px 50px rgba(10,20,40,0.15);
     }
-
-    /* Plan titles */
     .plan h2 {
       font-weight: 700;
       margin-bottom: 8px;
       font-size: 22px;
     }
-
-    /* Plan price */
     .price {
       font-size: 28px;
       font-weight: 800;
       margin-bottom: 16px;
       color: #0f6eff;
     }
-
-    /* Features list */
     ul.features {
       list-style: none;
       padding-left: 0;
@@ -160,8 +139,6 @@
       color: #0f6eff;
       font-weight: bold;
     }
-
-    /* Buttons */
     button.subscribe-btn {
       background: #0f6eff;
       color: white;
@@ -174,11 +151,7 @@
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
-    button.subscribe-btn:hover {
-      background: #0956cc;
-    }
-
-    /* Free plan button style */
+    button.subscribe-btn:hover { background: #0956cc; }
     button.free-btn {
       background: transparent;
       color: #0f6eff;
@@ -195,82 +168,62 @@
       background: #0f6eff;
       color: white;
     }
-
-    /* Responsive */
     @media (max-width: 640px) {
-      .modal {
-        flex-direction: column;
-      }
-      .plan {
-        width: 100%;
-      }
+      .modal { flex-direction: column; }
+      .plan { width: 100%; }
     }
   </style>
-  <!-- =======================
-       (END) YOUR ORIGINAL
-       PLAN UI — KEPT 100% AS-IS
-       ======================= -->
 
-
-  <!-- ================== Appended styles (app, dashboard, class views, modals) ================== -->
   <style>
-    /* app wrapper */
     .app-hidden { display:none; }
     .app { max-width:1200px; margin:18px auto; padding:0 18px 80px; font-family:Inter,system-ui,Arial,sans-serif; }
-
-    /* header (merged single header) */
     .app-header {
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:14px; background:#fff; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06);
       position: sticky; top:12px; z-index: 60;
       margin: 18px auto; max-width: 1100px;
     }
-    .logoBox { width:56px; height:56px; border-radius:10px; background:linear-gradient(135deg,#2b8bff,#6fb0ff); display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px; }
+    .logoBox {
+      width:56px; height:56px; border-radius:10px;
+      background:linear-gradient(135deg,#2b8bff,#6fb0ff);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:800;font-size:22px;
+    }
     .left, .center, .right { display:flex; align-items:center; gap:12px; }
     .center { flex-direction:column; align-items:center; text-align:center; flex:1; }
     .title { font-weight:800; font-size:18px; }
     .small-muted { font-size:12px; color:#6b7280; }
-
-    /* banner */
     .banner {
       margin-top:18px; border-radius:12px; background:linear-gradient(90deg,#eaf4ff,#f7fbff);
-      min-height:220px; padding:28px; display:flex; align-items:flex-end; box-shadow:0 10px 30px rgba(10,20,40,0.05);
+      min-height:220px; padding:28px; display:flex; align-items:flex-end;
+      box-shadow:0 10px 30px rgba(10,20,40,0.05);
       max-width: 1100px; margin-left: auto; margin-right: auto;
     }
     .banner h1{ font-size:34px; margin-bottom:6px; }
     .banner p{ color:var(--muted,#6b7280); }
-
-    /* layout flow */
     .flow { margin-top:20px; display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start; max-width:1100px; margin-left:auto; margin-right:auto; }
     .panel { background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.06); flex:1; min-width:220px; max-width: 360px; }
     .panel h3 { margin-bottom:12px; }
     .btn { display:block; width:100%; text-align:left; padding:12px; border-radius:10px; border:1px solid #f0f5ff; background:transparent; margin-bottom:10px; cursor:pointer; font-weight:700;}
     .btn.active { background:linear-gradient(90deg,#f0f8ff,#ecf7ff); border-color:#dbeeff; }
-
-    /* notes */
     .notes-panel { flex:1.2; min-width:280px; max-width: 540px; }
     .note-item { display:flex; justify-content:space-between; align-items:center; padding:12px; border-radius:10px; border:1px dashed #eef6ff; margin-bottom:10px; }
     .note-btn { background:var(--blue,#0f6eff); color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
-
-    /* breadcrumbs */
     .breadcrumbs { display:flex; gap:8px; align-items:center; color:#374151; font-weight:700; }
-
-    /* registration modal (Yuva) */
     .modal-yi { display:none; position:fixed; inset:0; background: rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:1001; }
     .modal-yi .card { background:#fff; border-radius:12px; padding:18px; width:100%; max-width:420px; box-shadow:0 12px 40px rgba(0,0,0,0.2); }
-    .modal-yi input[type="text"], .modal-yi input[type="email"], .modal-yi input[type="password"], .modal-yi select { width:100%; padding:10px; border-radius:8px; border:1px solid #e6eefb; margin-bottom:10px; }
+    .modal-yi input[type="text"], .modal-yi input[type="email"], .modal-yi input[type="password"], .modal-yi select {
+      width:100%; padding:10px; border-radius:8px; border:1px solid #e6eefb; margin-bottom:10px;
+    }
     .modal-yi label { display:block; margin-bottom:8px; font-weight:700; }
-
-    /* terms */
     .terms { background:#fff; padding:18px; border-radius:12px; box-shadow:0 8px 30px rgba(10,20,40,0.04); margin-top:20px; max-width:1100px; margin-left:auto; margin-right:auto; }
-
-    /* footer teachers */
-    footer.site-footer { margin-top:28px; padding:28px; text-align:center; color:#6b7280; background:linear-gradient(180deg,#fff,#fbfdff); box-shadow:0 8px 30px rgba(10,20,40,0.02); border-radius:12px; max-width:1100px; margin-left:auto; margin-right:auto; }
-
-    /* profile / small avatar */
+    footer.site-footer {
+      margin-top:28px; padding:28px; text-align:center; color:#6b7280;
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      box-shadow:0 8px 30px rgba(10,20,40,0.02);
+      border-radius:12px; max-width:1100px; margin-left:auto; margin-right:auto;
+    }
     .avatar { width:44px; height:44px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-weight:700; }
-
-    /* responsive */
     @media (max-width:880px) {
       .banner { min-height:140px; padding:18px; }
       .flow { flex-direction:column; }
@@ -279,80 +232,7 @@
   </style>
 </head>
 <body>
-
-  <!-- ================= original container (unchanged) ================= -->
-  <div class="container" id="originalContainer">
-    <header class="nav">
-      <div class="brand">
-        <div class="logo">SR</div>
-        <div>
-          <h1>Shree Ram Coaching</h1>
-          <div class="muted" style="font-size:13px">Foundation • Boards • Test Prep</div>
-        </div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="#courses" onclick="gotoSection('courses')">Courses</a>
-        <a href="#teachers" onclick="gotoSection('teachers')">Teachers</a>
-        <a href="#contact" onclick="gotoSection('contact')">Contact</a>
-      </nav>
-    </header>
-
-    <main>
-      <section id="courses" style="margin-top: 30px;">
-        <h2>Courses Section (Content here)</h2>
-        <p>This is the main site content. The user will see this after selecting a plan.</p>
-      </section>
-      <!-- Add your full site content here -->
-    </main>
-
-    <footer style="margin: 30px 0; text-align: center; color: #6b7280;">
-      © Shree Ram Coaching — Demo site.
-    </footer>
-  </div>
-  <!-- =============================================================== -->
-
-  <!-- ================= original modal (unchanged) ================= -->
-  <div id="planModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="plan">
-        <h2>Free Plan</h2>
-        <div class="price">₹0</div>
-        <ul class="features">
-          <li>Basic access to notes</li>
-          <li>Limited PDFs</li>
-          <li>Community support</li>
-        </ul>
-        <button class="free-btn" id="freeBtn">Continue with Free Plan</button>
-      </div>
-      <div class="plan">
-        <h2>Pro Plan</h2>
-        <div class="price">₹49 / month</div>
-        <ul class="features">
-          <li>Full access to notes & PDFs</li>
-          <li>Priority doubt support</li>
-          <li>Downloadable content</li>
-        </ul>
-        <button class="subscribe-btn" id="proBtn">Subscribe</button>
-      </div>
-      <div class="plan">
-        <h2>Advanced Plan</h2>
-        <div class="price">₹99 / month</div>
-        <ul class="features">
-          <li>All Pro features</li>
-          <li>One-on-one mentoring</li>
-          <li>Exclusive video content</li>
-        </ul>
-        <button class="subscribe-btn" id="advBtn">Subscribe</button>
-      </div>
-    </div>
-  </div>
-  <!-- =============================================================== -->
-
-  <!-- ================= App (hidden initially) ================= -->
-  <div id="app" class="app app-hidden" aria-hidden="true">
-
-    <!-- Header (single merged header) -->
+  <div id="app" class="app" aria-hidden="false">
     <div class="app-header" role="banner">
       <div class="left">
         <div class="logoBox">SR</div>
@@ -362,12 +242,10 @@
           <a href="#teachers" onclick="gotoSection('teachers')">Teachers</a>
         </nav>
       </div>
-
       <div class="center">
         <div class="title">Shree Ram Coaching</div>
         <div class="small-muted">Foundation • Boards • Test Prep</div>
       </div>
-
       <div class="right">
         <div class="search">
           <input id="searchBox" placeholder="Search e.g. class 10 chemistry ch1" oninput="handleSearch()" />
@@ -379,569 +257,151 @@
         </div>
       </div>
     </div>
-
-    <!-- Banner -->
-    <div class="banner" role="img" aria-label="Banner Placeholder">
+    <div class="banner">
       <div>
         <h1>Welcome to Shree Ram Coaching</h1>
-        <p style="margin-top:6px">Your learning journey — structured, simple, smart.</p>
+        <p>Explore courses, notes, and resources to boost your learning.</p>
       </div>
     </div>
 
-    <!-- Dashboard -->
-    <div class="flow" style="margin-top:24px;">
-      <div class="panel classes" id="classesPanel">
-        <h3>Classes</h3>
-        <div id="classesBox">
-          <!-- buttons injected by JS -->
+    <div class="flow">
+      <div class="panel">
+        <h3>Courses</h3>
+        <button class="btn" onclick="gotoSection('course-maths')">Mathematics</button>
+        <button class="btn" onclick="gotoSection('course-science')">Science</button>
+        <button class="btn" onclick="gotoSection('course-english')">English</button>
+      </div>
+
+      <div class="panel notes-panel">
+        <h3>Recent Notes</h3>
+        <div class="note-item">
+          <span>Class 10 - Chemistry Ch 1</span>
+          <button class="note-btn">View</button>
         </div>
-      </div>
-
-      <div class="panel subjects" id="subjectsPanel">
-        <h3>Subjects</h3>
-        <div id="subjectsBox" class="small-muted">Select a class to see subjects</div>
-      </div>
-
-      <div class="panel chapters" id="chaptersPanel">
-        <h3>Chapters</h3>
-        <div id="chaptersBox" class="small-muted">Select a subject to see chapters</div>
-      </div>
-
-      <div class="panel notes-panel" id="notesPanel">
-        <h3>Notes / PDFs</h3>
-        <div id="notesBox" class="small-muted">Select a chapter to see notes</div>
+        <div class="note-item">
+          <span>Class 9 - Algebra</span>
+          <button class="note-btn">View</button>
+        </div>
       </div>
     </div>
 
-    <!-- Breadcrumbs -->
-    <div style="max-width:1100px;margin:18px auto">
-      <div id="breadcrumbs" class="breadcrumbs"><span style="color:#9aa4b2">Home</span></div>
+    <div class="terms">
+      <h2>Terms & Guidelines</h2>
+      <p>Please follow the guidelines while using the platform...</p>
     </div>
 
-    <!-- Terms & Conditions -->
-    <div class="terms" id="termsBox">
-      <h3>Terms & Conditions (placeholder)</h3>
-      <p>This is a placeholder Terms & Conditions section. Replace this text with your official T&amp;C copy when ready. Users must accept Terms while registering.</p>
-      <ul>
-        <li>By using this site you agree to demo terms.</li>
-        <li>User data is stored locally in the browser for demonstration only.</li>
-        <li>Do not store sensitive information on client-side storage in production.</li>
-      </ul>
-    </div>
-
-    <!-- Footer / Teachers -->
-    <footer class="site-footer" id="teachers">
-      <h3>Our Teachers</h3>
-      <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:12px">
-        <div style="width:200px; text-align:center">
-          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
-          <div style="font-weight:800;margin-top:8px">Mohnesh Sir</div>
-          <div class="small-muted">SST</div>
-        </div>
-        <div style="width:200px; text-align:center">
-          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
-          <div style="font-weight:800;margin-top:8px">Deepika Mam</div>
-          <div class="small-muted">Science</div>
-        </div>
-        <div style="width:200px; text-align:center">
-          <div style="width:96px;height:96px;border-radius:12px;margin:0 auto;background:#f3f4f6;display:flex;align-items:center;justify-content:center">Img</div>
-          <div style="font-weight:800;margin-top:8px">Rohit Sir</div>
-          <div class="small-muted">Maths</div>
-        </div>
-      </div>
-
-      <div style="margin-top:18px;color:#9aa4b2;font-size:13px">
-        © Shree Ram Coaching — Demo site. All rights reserved.
-      </div>
+    <footer class="site-footer">
+      &copy; 2025 Shree Ram Coaching — All Rights Reserved.
     </footer>
+  </div> <!-- End of #app -->
 
-  </div>
-  <!-- =============================================================== -->
-
-  <!-- ================= Registration (Yuva) Modal (client-side auth) ================= -->
-  <div id="yuvaModal" class="modal-yi" role="dialog" aria-modal="true" aria-labelledby="yuvaTitle">
+  <!-- Yuva Modal -->
+  <div class="modal-yi" id="yuvaModal">
     <div class="card">
-      <h2 id="yuvaTitle">Yuva — Register / Login</h2>
-
-      <div id="authArea">
-        <label for="yuvaName">Full Name</label>
-        <input id="yuvaName" type="text" placeholder="Your full name" />
-
-        <label for="yuvaEmail">Gmail Address</label>
-        <input id="yuvaEmail" type="email" placeholder="you@gmail.com" />
-
-        <label for="yuvaClass">Class</label>
-        <select id="yuvaClass">
-          <option value="">Select Class</option>
-          <option>class 9</option>
-          <option>class 10</option>
-          <option>class 11</option>
-        </select>
-
-        <label for="yuvaPassword">Password (demo only)</label>
-        <input id="yuvaPassword" type="password" placeholder="Choose a password" />
-
-        <label for="yuvaPhoto">Profile Photo (optional)</label>
-        <input id="yuvaPhoto" type="file" accept="image/*" />
-
-        <div style="margin:8px 0">
-          <label><input id="yuvaTerms" type="checkbox" /> I accept terms &amp; conditions</label>
-        </div>
-
-        <div style="display:flex;gap:8px;justify-content:space-between">
-          <button onclick="yuvaRegister()">Register</button>
-          <button onclick="yuvaLogin()">Login</button>
-          <button onclick="closeYuvaModal()" style="background:#e74c3c">Close</button>
-        </div>
-
-        <div style="margin-top:12px;color:#9aa4b2;font-size:13px">
-          Note: This demo stores account details in your browser (localStorage). For production, connect a secure backend.
-        </div>
-      </div>
-
-      <div id="profileArea" style="display:none"></div>
+      <h3>Register / Login to Yuva</h3>
+      <label>Name</label>
+      <input type="text" id="yuvaName" placeholder="Full name" />
+      <label>Email</label>
+      <input type="email" id="yuvaEmail" placeholder="Email address" />
+      <label>Password</label>
+      <input type="password" id="yuvaPassword" placeholder="Password" />
+      <label>Plan</label>
+      <select id="yuvaPlan">
+        <option value="free">Free</option>
+        <option value="basic">Basic</option>
+        <option value="pro">Pro</option>
+      </select>
+      <button onclick="submitYuva()">Submit</button>
+      <button onclick="closeYuvaModal()">Cancel</button>
     </div>
   </div>
-  <!-- =============================================================================== -->
 
-
-  <!-- ================= App Script (large, feature-rich) ================= -->
+  <!-- Subscription Modal -->
+  <div class="modal-overlay" id="planModal" style="display:none;">
+    <div class="modal">
+      <div class="plan">
+        <h2>Free Plan</h2>
+        <div class="price">₹0/month</div>
+        <ul class="features">
+          <li>Access to free courses</li>
+          <li>Limited notes</li>
+        </ul>
+        <button class="free-btn" onclick="choosePlan('Free')">Choose</button>
+      </div>
+      <div class="plan">
+        <h2>Basic Plan</h2>
+        <div class="price">₹299/month</div>
+        <ul class="features">
+          <li>All free features</li>
+          <li>Extra notes</li>
+          <li>Practice tests</li>
+        </ul>
+        <button class="subscribe-btn" onclick="choosePlan('Basic')">Subscribe</button>
+      </div>
+      <div class="plan">
+        <h2>Pro Plan</h2>
+        <div class="price">₹599/month</div>
+        <ul class="features">
+          <li>All basic features</li>
+          <li>One-on-one mentorship</li>
+          <li>Advanced tests</li>
+        </ul>
+        <button class="subscribe-btn" onclick="choosePlan('Pro')">Subscribe</button>
+      </div>
+    </div>
+  </div>
   <script>
-    /*************************************************************************
-     * Data & sample PDFs
-     * - Edit the `data` object to add/replace classes, subjects, chapters, PDFs
-     **************************************************************************/
-    const samplePDF = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
-
-    const data = {
-      "class 9": {
-        "Chemistry": {
-          "ch1": [{ title: "Ch1: Matter - Notes", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Atoms - Notes", url: samplePDF }]
-        },
-        "Physics": {
-          "ch1": [{ title: "Ch1: Motion", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Force", url: samplePDF }]
-        }
-      },
-      "class 10": {
-        "Chemistry": {
-          "ch1": [{ title: "Ch1: Chemical Reactions", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Acids & Bases", url: samplePDF }]
-        },
-        "Physics": {
-          "ch1": [{ title: "Ch1: Light", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Electricity", url: samplePDF }]
-        }
-      },
-      "class 11": {
-        "Chemistry": {
-          "ch1": [{ title: "Ch1: Atomic Structure", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Chemical Bonding", url: samplePDF }]
-        },
-        "Physics": {
-          "ch1": [{ title: "Ch1: Kinematics", url: samplePDF }],
-          "ch2": [{ title: "Ch2: Laws of Motion", url: samplePDF }]
-        }
-      }
-    };
-
-    /*************************************************************************
-     * Basic element refs
-     **************************************************************************/
-    const planModal     = document.getElementById('planModal');
-    const appEl         = document.getElementById('app');
-    const classesBox    = document.getElementById('classesBox');
-    const subjectsBox   = document.getElementById('subjectsBox');
-    const chaptersBox   = document.getElementById('chaptersBox');
-    const notesBox      = document.getElementById('notesBox');
-    const breadcrumbsEl = document.getElementById('breadcrumbs');
-    const planBadgeEl   = document.getElementById('planBadge');
-    const avatarEl      = document.getElementById('avatar');
-    const loginBtnEl    = document.getElementById('loginBtn');
-    const searchBox     = document.getElementById('searchBox');
-
-    /*************************************************************************
-     * Hook original modal buttons (kept UI unchanged)
-     **************************************************************************/
-    document.getElementById('freeBtn').addEventListener('click', () => selectPlanAndOpenApp('Free'));
-    document.getElementById('proBtn').addEventListener('click', () => selectPlanAndOpenApp('Pro'));
-    document.getElementById('advBtn').addEventListener('click', () => selectPlanAndOpenApp('Advanced'));
-
-    function selectPlanAndOpenApp(planName) {
-      planModal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      localStorage.setItem('src_selectedPlan', planName);
-      planBadgeEl.textContent = planName;
-
-      // show app
-      appEl.classList.remove('app-hidden');
-      appEl.setAttribute('aria-hidden','false');
-
-      // render classes and UI
-      renderClasses();
-
-      // try to auto-login if local user exists
-      loadLocalProfileToHeader();
+    function gotoHome() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // On initial load: either show modal (UI) or app (previous plan)
-    window.addEventListener('load', () => {
-      const savedPlan = localStorage.getItem('src_selectedPlan');
-      if (savedPlan) {
-        // hide modal and show app
-        planModal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-        planBadgeEl.textContent = savedPlan;
-        appEl.classList.remove('app-hidden');
-        appEl.setAttribute('aria-hidden','false');
-        renderClasses();
-        loadLocalProfileToHeader();
-      } else {
-        // show original modal
-        planModal.style.display = 'flex';
-        document.body.classList.add('modal-open');
-      }
-    });
-
-    /*************************************************************************
-     * Render Classes (dashboard)
-     **************************************************************************/
-    function renderClasses() {
-      classesBox.innerHTML = '';
-      Object.keys(data).forEach(cls => {
-        const btn = document.createElement('button');
-        btn.className = 'btn';
-        btn.textContent = cls;
-        btn.onclick = () => selectClass(cls, btn);
-        classesBox.appendChild(btn);
-      });
-
-      // reset others
-      subjectsBox.innerHTML = '<div class="small-muted">Select a class to see subjects</div>';
-      chaptersBox.innerHTML = '<div class="small-muted">Select a subject to see chapters</div>';
-      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
-      renderBreadcrumbs();
+    function gotoSection(id) {
+      alert('Navigating to: ' + id);
     }
-
-    let currentClass = null;
-    let currentSubject = null;
-    let currentChapter = null;
-
-    function selectClass(cls, btnEl) {
-      currentClass = cls;
-      currentSubject = null;
-      currentChapter = null;
-
-      // highlight active
-      Array.from(classesBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
-
-      // render subjects
-      const subs = Object.keys(data[cls] || {});
-      subjectsBox.innerHTML = '';
-      subs.forEach(s => {
-        const b = document.createElement('button'); b.className = 'btn';
-        b.textContent = s; b.onclick = () => selectSubject(s, b);
-        subjectsBox.appendChild(b);
-      });
-
-      chaptersBox.innerHTML = '<div class="small-muted">Select a subject to see chapters</div>';
-      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
-      renderBreadcrumbs();
-    }
-
-    function selectSubject(sub, btnEl) {
-      currentSubject = sub;
-      currentChapter = null;
-      Array.from(subjectsBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
-
-      // render chapters
-      const chs = Object.keys(data[currentClass][sub] || {});
-      chaptersBox.innerHTML = '';
-      chs.forEach(ch => {
-        const b = document.createElement('button'); b.className = 'btn';
-        b.textContent = ch; b.onclick = () => selectChapter(ch, b);
-        chaptersBox.appendChild(b);
-      });
-
-      notesBox.innerHTML = '<div class="small-muted">Select a chapter to see notes</div>';
-      renderBreadcrumbs();
-    }
-
-    function selectChapter(ch, btnEl) {
-      currentChapter = ch;
-      Array.from(chaptersBox.querySelectorAll('button')).forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
-
-      // render notes
-      const items = (data[currentClass] && data[currentClass][currentSubject] && data[currentClass][currentSubject][ch]) || [];
-      notesBox.innerHTML = '';
-      if (!items.length) {
-        notesBox.innerHTML = '<div class="small-muted">No notes available</div>';
-      } else {
-        items.forEach(it => {
-          const n = document.createElement('div'); n.className = 'note-item';
-          n.innerHTML = `<div style="font-weight:700">${it.title}</div><div><button class="note-btn" onclick="window.open('${it.url}','_blank')">Open</button></div>`;
-          notesBox.appendChild(n);
-        });
-      }
-      renderBreadcrumbs();
-    }
-
-    function renderBreadcrumbs() {
-      let html = `<span style="color:#9aa4b2">Home</span>`;
-      if (currentClass) html += `<span class="arrow">→</span><span>${currentClass}</span>`;
-      if (currentSubject) html += `<span class="arrow">→</span><span>${currentSubject}</span>`;
-      if (currentChapter) html += `<span class="arrow">→</span><span>${currentChapter}</span>`;
-      breadcrumbsEl.innerHTML = html;
-    }
-
-    /*************************************************************************
-     * Search: supports phrases like "class 10 chemistry ch1"
-     **************************************************************************/
     function handleSearch() {
-      const q = (searchBox.value || '').trim().toLowerCase();
-      if (!q) return;
-
-      // find class token
-      let clsKey = null;
-      Object.keys(data).forEach(k => { if (q.includes(k)) clsKey = k; });
-
-      // find subject token
-      let subjectKey = null;
-      if (clsKey) {
-        Object.keys(data[clsKey]).forEach(s => { if (q.includes(s.toLowerCase())) subjectKey = s; });
-      } else {
-        Object.keys(data).forEach(k => {
-          Object.keys(data[k]).forEach(s => { if (q.includes(s.toLowerCase())) { subjectKey = s; clsKey = k; }});
-        });
-      }
-
-      // find chapter (ch1 etc)
-      let chapterKey = null;
-      const chMatch = q.match(/ch(?:apter)?\s*?(\d+)/) || q.match(/ch(\d+)/);
-      if (chMatch) chapterKey = 'ch' + chMatch[1];
-
-      // if exact found
-      if (clsKey && subjectKey && chapterKey && data[clsKey] && data[clsKey][subjectKey] && data[clsKey][subjectKey][chapterKey]) {
-        selectClass(clsKey, Array.from(classesBox.children).find(b => b.textContent === clsKey));
-        setTimeout(()=> {
-          Array.from(subjectsBox.children).find(b => b.textContent === subjectKey).click();
-          setTimeout(()=> {
-            Array.from(chaptersBox.children).find(b => b.textContent === chapterKey).click();
-          }, 120);
-        },120);
-        return;
-      }
-
-      // fuzzy search in note titles
-      const results = [];
-      Object.keys(data).forEach(cls=>{
-        Object.keys(data[cls]).forEach(sub=>{
-          Object.keys(data[cls][sub]).forEach(ch=>{
-            (data[cls][sub][ch] || []).forEach(it=>{
-              const combined = `${cls} ${sub} ${ch} ${it.title}`.toLowerCase();
-              if (combined.includes(q)) results.push({cls, sub, ch, it});
-            });
-          });
-        });
-      });
-
-      if (results.length) {
-        const r = results[0];
-        selectClass(r.cls, Array.from(classesBox.children).find(b => b.textContent === r.cls));
-        setTimeout(()=> {
-          Array.from(subjectsBox.children).find(b => b.textContent === r.sub).click();
-          setTimeout(()=> {
-            Array.from(chaptersBox.children).find(b => b.textContent === r.ch).click();
-            setTimeout(()=> {
-              const firstNote = notesBox.querySelector('.note-item');
-              if (firstNote) firstNote.scrollIntoView({behavior:'smooth', block:'center'});
-            }, 200);
-          }, 120);
-        }, 120);
-        return;
-      }
-
-      alert('No results found for: ' + q);
+      const val = document.getElementById('searchBox').value.trim();
+      console.log('Search:', val);
     }
 
-    /*************************************************************************
-     * Registration & Login (client-side, localStorage)
-     **************************************************************************/
-    function openYuvaModal(){
+    // Plan modal
+    function choosePlan(plan) {
+      document.getElementById('planBadge').textContent = plan;
+      closePlanModal();
+    }
+    function openPlanModal() {
+      document.getElementById('planModal').style.display = 'flex';
+      document.body.classList.add('modal-open');
+    }
+    function closePlanModal() {
+      document.getElementById('planModal').style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+
+    // Yuva modal
+    function openYuvaModal() {
       document.getElementById('yuvaModal').style.display = 'flex';
-      // if profile exists show profile area
-      loadLocalProfileToModal();
     }
-    function closeYuvaModal(){
+    function closeYuvaModal() {
       document.getElementById('yuvaModal').style.display = 'none';
     }
-
-    // helper: read image file as base64
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        if (!file) return resolve(null);
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function yuvaRegister() {
-      const name = document.getElementById('yuvaName').value.trim();
-      const email = document.getElementById('yuvaEmail').value.trim().toLowerCase();
-      const cls = document.getElementById('yuvaClass').value;
-      const pwd = document.getElementById('yuvaPassword').value;
-      const photoInput = document.getElementById('yuvaPhoto');
-      const terms = document.getElementById('yuvaTerms').checked;
-
-      if (!name) return alert('Enter name');
-      if (!email || !email.endsWith('@gmail.com')) return alert('Use a valid Gmail address (example@gmail.com)');
-      if (!cls) return alert('Select class');
-      if (!pwd || pwd.length < 4) return alert('Choose a password (min 4 chars)');
-      if (!terms) return alert('Accept Terms & Conditions');
-
-      // convert photo
-      const file = photoInput.files && photoInput.files[0];
-      const photoBase64 = await fileToBase64(file);
-
-      // store account in localStorage under key 'yuva_accounts'
-      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
-      if (accounts[email]) {
-        if (!confirm('Account with this email exists. Overwrite?')) return;
-      }
-      accounts[email] = { name, email, cls, pwd, photo: photoBase64, created: new Date().toISOString() };
-      localStorage.setItem('yuva_accounts', JSON.stringify(accounts));
-
-      // auto-login
-      localStorage.setItem('yuva_logged_in', email);
+    function submitYuva() {
+      const name = document.getElementById('yuvaName').value;
+      const email = document.getElementById('yuvaEmail').value;
+      const plan = document.getElementById('yuvaPlan').value;
+      alert(`Registered ${name} (${email}) with plan: ${plan}`);
       closeYuvaModal();
-      updateHeaderAfterLogin();
-      alert('Registration successful. Welcome, ' + name);
     }
 
-    function yuvaLogin() {
-      const email = document.getElementById('yuvaEmail').value.trim().toLowerCase();
-      const pwd = document.getElementById('yuvaPassword').value;
-
-      if (!email || !pwd) return alert('Enter email & password');
-
-      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
-      const acc = accounts[email];
-      if (!acc) return alert('Account not found. Please register.');
-      if (acc.pwd !== pwd) return alert('Incorrect password.');
-
-      localStorage.setItem('yuva_logged_in', email);
-      closeYuvaModal();
-      updateHeaderAfterLogin();
-      alert('Welcome back, ' + acc.name);
-    }
-
-    function logoutYuva() {
-      localStorage.removeItem('yuva_logged_in');
-      updateHeaderAfterLogin();
-      alert('Logged out.');
-    }
-
-    function loadLocalProfileToModal() {
-      const logged = localStorage.getItem('yuva_logged_in');
-      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
-      const profileArea = document.getElementById('profileArea');
-      profileArea.style.display = 'none';
-      document.getElementById('authArea').style.display = 'block';
-
-      if (logged && accounts[logged]) {
-        const p = accounts[logged];
-        // prefill form with account data
-        document.getElementById('yuvaName').value = p.name || '';
-        document.getElementById('yuvaEmail').value = p.email || '';
-        document.getElementById('yuvaClass').value = p.cls || '';
-        document.getElementById('yuvaPassword').value = p.pwd || '';
-        // show profile area optionally
-        document.getElementById('profileArea').style.display = 'none';
-      } else {
-        // clear fields
-        document.getElementById('yuvaName').value = '';
-        document.getElementById('yuvaEmail').value = '';
-        document.getElementById('yuvaClass').value = '';
-        document.getElementById('yuvaPassword').value = '';
+    // Close modals on click outside
+    document.addEventListener('click', function(e) {
+      const planModal = document.getElementById('planModal');
+      if (e.target === planModal) {
+        closePlanModal();
       }
-    }
-
-    function updateHeaderAfterLogin(){
-      const logged = localStorage.getItem('yuva_logged_in');
-      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
-      if (logged && accounts[logged]) {
-        const p = accounts[logged];
-        // avatar update
-        if (p.photo) {
-          avatarEl.style.backgroundImage = `url(${p.photo})`;
-          avatarEl.style.backgroundSize = 'cover';
-          avatarEl.textContent = '';
-        } else {
-          avatarEl.textContent = p.name.split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
-        }
-        loginBtnEl.textContent = 'Profile';
-        loginBtnEl.onclick = () => openProfileMenu();
-      } else {
-        avatarEl.style.backgroundImage = '';
-        avatarEl.textContent = 'ID';
-        loginBtnEl.textContent = 'Yuva';
-        loginBtnEl.onclick = () => openYuvaModal();
+      const yuvaModal = document.getElementById('yuvaModal');
+      if (e.target === yuvaModal) {
+        closeYuvaModal();
       }
-    }
-
-    function openProfileMenu(){
-      // show a small menu (confirm logout / view profile)
-      const logged = localStorage.getItem('yuva_logged_in');
-      const accounts = JSON.parse(localStorage.getItem('yuva_accounts') || '{}');
-      if (!logged || !accounts[logged]) {
-        openYuvaModal(); return;
-      }
-      const p = accounts[logged];
-      const menu = `
-        Name: ${p.name}\nClass: ${p.cls}\nEmail: ${p.email}\n\nClick OK to logout, Cancel to close.
-      `;
-      if (confirm(menu)) {
-        logoutYuva();
-      }
-    }
-
-    function loadLocalProfileToHeader(){
-      updateHeaderAfterLogin();
-    }
-
-    // expose some helpers for debugging
-    window._SITE = { data };
-
-    /*************************************************************************
-     * small helpers & navigation functions
-     **************************************************************************/
-    function gotoHome(){ window.scrollTo({top:0, behavior:'smooth'}); }
-    function gotoSection(id){
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.scrollIntoView({behavior:'smooth'});
-    }
-
-    // small UI helpers to open Yuva modal from header button
-    function openYuvaModalFromHeader(){
-      openYuvaModal();
-    }
-
-    // attach a few convenience events
-    // ensure header reflects login state immediately
-    updateHeaderAfterLogin();
-
-    /*************************************************************************
-     * End app script
-     **************************************************************************/
-
+    });
   </script>
-
 </body>
 </html>
